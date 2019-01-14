@@ -3,8 +3,8 @@
 //});
 
 $(document).ready ( function(){
-    $("#header").load("header.jsp");
-    $("#footer").load("footer.jsp");
+    $("#header").load("header.html");
+    $("#footer").load("footer.html");
 });
 
 function openCloseSearch() {

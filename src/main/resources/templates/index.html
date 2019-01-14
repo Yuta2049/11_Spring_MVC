@@ -1,9 +1,9 @@
-<%@ page isELIgnored="false" %>
+<!--%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%-->
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -59,43 +59,45 @@
         </div>
     </div>
 
-    <c:forEach items="${categories}" var="category">
+    <!--c:forEach items="${categories}" var="category"-->
+    <div th:each="category : ${categories}">
 
         <div class="category">
-            <H2>${category.name}</H2>
+            <H2 th:text=${category.name}></H2>
             <hr>
         </div>
 
 
         <ul class="products">
 
-            <c:forEach items="${products}" var="product">
+            <!--c:forEach items="${products}" var="product"-->
+                <div th:each="product : ${products}">
 
-                <c:if test="${category.id==product.category}">
+                <!--c:if test="${category.id==product.category}"-->
+                <div th:if="${category.id==product.category}">
 
-                    <li class="product" id="a${category.id}${product.id}">
+                    <li class="product" th:id="@{'a'+${category.id}+${product.id}}">
 
-                        <div class="visibleSection" id="b${category.id}${product.id}" onclick="showHiddenTab('a${category.id}${product.id}', 'b${category.id}${product.id}', 'c${category.id}${product.id}');">
+                        <div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}" th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
                             <div class="image">
-                                <img src="images/${product.image}">
+                                <!--th:href="@{/order/details(orderId=${o.id})}-->
+                                <img th:src="@{'images/'+${product.image}}">
                             </div>
 
 
-                            <div class="productName">
-                                ${product.name}
+                            <div class="productName" th:text=${product.name}>
                             </div>
                         </div>
 
-                        <div class="hiddenSection" id="c${category.id}${product.id}" onclick="hideHiddenTab('a${category.id}${product.id}', 'b${category.id}${product.id}', 'c${category.id}${product.id}');">
+                        <div class="hiddenSection" th:id="@{'c'+${category.id}+${product.id}}" th:onclick="@{'hideHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
                             <div class="image">
-                                <img src="images/${product.image}">
+                                <img th:src="@{'images/'+${product.image}}">
                             </div>
 
 
-                            <div class="price">
-                                ${product.price}
+                            <div class="price" th:text=${product.price}>
                             </div>
 
                             <button class="add">Да, я хочу этот корабль!</button>
@@ -103,11 +105,13 @@
                         </div>
 
                     </li>
-                </c:if>
+                </div>
 
-            </c:forEach>
+            <!--/c:forEach-->
+            </div>
         </ul>
-    </c:forEach>
+    <!--/c:forEach-->
+    </div>
 
 </div>
 
