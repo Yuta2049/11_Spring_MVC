@@ -22,4 +22,10 @@ public class UserDAO {
         return users.stream().filter(o -> o.getLogin().equals(login) && o.getPassword().equals(password)).findFirst().orElse(null);
     }
 
+
+    public User findUserByLogin(String login) {
+        List<User> users = findAll();
+        return users.stream().filter(o -> o.getLogin().equals(login)).findFirst().orElse(null);
+    }
+
 }

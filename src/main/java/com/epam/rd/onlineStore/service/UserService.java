@@ -19,4 +19,9 @@ public class UserService {
         return userDAO.findByLoginAndPassword(login, password);
     }
 
+    public User findUserByLogin(String login) {
+        return userDAO.findUserByLogin(login);
+    }
+
+
 }
