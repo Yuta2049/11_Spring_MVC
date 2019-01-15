@@ -15,7 +15,6 @@ public class UserDAO {
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-
         Set<Privilege> privilegesUser = new HashSet<>();
         privilegesUser.add(new Privilege(1, "User"));
 

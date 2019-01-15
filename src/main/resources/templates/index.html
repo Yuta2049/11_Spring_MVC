@@ -59,6 +59,44 @@
         </div>
     </div>
 
+
+    <div id="AddProductWindow">
+        <div id="AddProductContainer">
+            <h1>Товар</h1>
+            <b class="openCloseAddProduct" aria-hidden="true">x</b>
+            <div id="ProductWindow">
+
+                <!--form th:object="{product}" id="add-product-form" method="post"-->
+            <form action="/products/new" method="post">
+
+
+
+                    <label>Наименование:</label>
+                    <input required type="text" name="name" placeholder="Наименование">
+                    <br />
+
+                    <label>Цена:</label>
+                    <input required type="text" name="price" placeholder="Цена"><br />
+
+                <label>Категория:</label>
+                <input required type="text" name="category" placeholder="Категория"><br />
+
+                <!--input type="submit" value="Сохранить"-->
+                    <!--<button-->
+                        <!--th:with="text=${product['new']} ? 'Добавить товар' : 'Сохранить товар'"-->
+                        <!--type="submit" th:text="${text}">Добавить товар</button>-->
+                <button type="submit">Добавить товар</button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
     <!--c:forEach items="${categories}" var="category"-->
     <div th:each="category : ${categories}">
 
@@ -68,15 +106,30 @@
         </div>
 
 
+        <button id="openCloseAddProduct" class = "openCloseAddProduct">Добавить товар</button>
+
+
         <ul class="products">
 
             <!--c:forEach items="${products}" var="product"-->
                 <div th:each="product : ${products}">
+                    <!--<th:each="product : ${products}">-->
 
                 <!--c:if test="${category.id==product.category}"-->
                 <div th:if="${category.id==product.category}">
 
                     <li class="product" th:id="@{'a'+${category.id}+${product.id}}">
+
+                    <!--  Кнопки админа -->
+                        <a href="/products/${productIterator.id}/edit">
+                            <img src="${edit}" title="Редактировать товар" alt="Редактировать товар">
+                        </a>
+
+                        <a href="/products/${productIterator.id}/delete">
+                            <img src="${delete}" title="Удалить товар" alt="Удалить товар">
+                        </a>
+
+                        <!--  Кнопки админа (КОНЕЦ) -->
 
                         <div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}" th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
@@ -109,6 +162,7 @@
 
             <!--/c:forEach-->
             </div>
+            <!--</th>-->
         </ul>
     <!--/c:forEach-->
     </div>
@@ -129,6 +183,42 @@
 <script type="text/javascript" src="js/cart.js"></script>
 
 <script type="text/javascript" src="js/search.js"></script>
+
+
+
+
+<!--<script>-->
+		<!--var modal = document.getElementById('myModal');-->
+		<!--var btn = document.getElementById("myBtn");-->
+		<!--var span = document.getElementsByClassName("close")[0];-->
+		<!--btn.onclick = function() {-->
+			<!--modal.style.display = "block";-->
+		<!--}-->
+		<!--span.onclick = function() {-->
+			<!--modal.style.display = "none";-->
+		<!--}-->
+		<!--window.onclick = function(event) {-->
+			<!--if (event.target == modal) {-->
+				<!--modal.style.display = "none";-->
+			<!--}-->
+		<!--}-->
+		<!--//2-->
+		<!--var searchModel = document.getElementById('mySearch');-->
+		<!--var btn1 = document.getElementById("myBtn1");-->
+		<!--var span1 = document.getElementsByClassName("close")[0];-->
+		<!--btn1.onclick = function() {-->
+			<!--searchModel.style.display = "block";-->
+		<!--}-->
+		<!--span1.onclick = function() {-->
+			<!--searchModel.style.display = "none";-->
+		<!--}-->
+		<!--window.onclick = function(event) {-->
+			<!--if (event.target == searchModel) {-->
+				<!--searchModel.style.display = "none";-->
+			<!--}-->
+		<!--}-->
+	<!--</script>-->
+
 
 </body>
 

@@ -15,4 +15,8 @@ public class ProductService {
         return productDAO.findAll();
     }
 
+    public Product save(Product product) {
+        return productDAO.save(product);
+    }
+
 }

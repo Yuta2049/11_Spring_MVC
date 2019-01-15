@@ -15,3 +15,8 @@ function openCloseSearch() {
 $('.openCloseSearch').click(function () {
     $('#searchWindow').toggle();
 });
+
+
+$('.openCloseAddProduct').click(function () {
+    $('#AddProductWindow').toggle();
+    })

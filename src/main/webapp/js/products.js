@@ -358,3 +358,5 @@ function hideHiddenTab(productSectionName, tabName, tabName2) {
     productSection.removeAttribute('style');
 
 }
+
+

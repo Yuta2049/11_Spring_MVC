@@ -7,7 +7,9 @@ import java.util.List;
 
 public class ProductDAO {
 
-    public List<Product> findAll() {
+    private List<Product> productList = new ArrayList<>();
+
+    private List<Product> initProductList() {
 
         List<Product> products = new ArrayList<>();
 
@@ -31,7 +33,21 @@ public class ProductDAO {
         products.add(new Product(15, "BubbleShip (Oblivion)", 3,300000, "bubbleship_oblivion.jpg"));
         products.add(new Product(16, "Пепелац (Кин-Дза-Дза)", 3,300000, "pepelaz_kin_dza_dza.jpg"));
 
+        this.productList = products;
+
         return products;
+    }
+
+    public List<Product> findAll() {
+        if (productList.isEmpty()) {
+            initProductList();
+        }
+        return productList;
 }
+
+    public Product save(Product product) {
+        productList.add(product);
+        return product;
+    }
 
 }
