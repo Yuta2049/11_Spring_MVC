@@ -1,33 +1,41 @@
 package com.epam.rd.onlineStore.config;
 
-import com.epam.rd.onlineStore.service.SomeUserService;
-import com.epam.rd.onlineStore.service.UserService;
+import com.epam.rd.onlineStore.service.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+@Autowired
+private UserDetailServiceImpl userDetailsService;
 
-
-
-    protected static class AuthentificationConfigurer extends GlobalAuthenticationConfigurerAdapter {
-
-        UserService userService;
-
-        @Override
-        public void init(AuthenticationManagerBuilder auth) throws Exception {
-            //super.init(auth);
-            auth
-                    .userDetailsService(new SomeUserService(userService));
-
+@Override
+protected void configure(AuthenticationManagerBuilder auth)
+        throws Exception {
+        auth.authenticationProvider(authenticationProvider());
         }
-    }
 
+@Bean
+public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider
+        = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(encoder());
+        return authProvider;
+        }
+
+@Bean
+public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder(11);
+        }
 
 }

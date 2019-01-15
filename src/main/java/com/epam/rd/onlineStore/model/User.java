@@ -1,45 +1,37 @@
 package com.epam.rd.onlineStore.model;
 
-import java.io.Serializable;
+import java.util.*;
 
-public class User implements Serializable {
 
-    private String userName;
-    private String userSurname;
-    private String login;
+public class User {
+
+    private long id;
+    private String username;
     private String password;
-    private String email;
 
-    public User(String userName, String userSurname, String login, String password, String email) {
-        this.userName = userName;
-        this.userSurname = userSurname;
-        this.login = login;
+    private Set<Privilege> privileges;
+
+    public User(long id, String username, String password, Set<Privilege> privileges) {
+        this.id = id;
+        this.username = username;
         this.password = password;
-        this.email = email;
+        this.privileges = privileges;
     }
 
-    public String getUserName() {
-        return userName;
+    public long getId() {
+        return id;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getUserSurname() {
-        return userSurname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserSurname(String userSurname) {
-        this.userSurname = userSurname;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -50,11 +42,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public Set<Privilege> getPrivileges() {
+        return privileges;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPrivileges(Set<Privilege> privileges) {
+        this.privileges = privileges;
     }
 }
