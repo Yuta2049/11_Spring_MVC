@@ -1,16 +1,19 @@
 package com.epam.rd.onlineStore.dto;
 
 import com.epam.rd.onlineStore.model.Product;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class ProductDAO {
 
-    private List<Product> productList = new ArrayList<>();
+    private List<Product> productList ;
 
-    private List<Product> initProductList() {
-
+    @PostConstruct
+    private void init() {
         List<Product> products = new ArrayList<>();
 
         products.add(new Product(0, "Elysium (Pandorum)", 1,300000, "elysium_pandorum.jpg"));
@@ -34,20 +37,19 @@ public class ProductDAO {
         products.add(new Product(16, "Пепелац (Кин-Дза-Дза)", 3,300000, "pepelaz_kin_dza_dza.jpg"));
 
         this.productList = products;
-
-        return products;
     }
 
     public List<Product> findAll() {
-        if (productList.isEmpty()) {
-            initProductList();
-        }
         return productList;
 }
 
     public Product save(Product product) {
         productList.add(product);
         return product;
+    }
+
+    public Product findById(long id) {
+        return productList.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
     }
 
 }

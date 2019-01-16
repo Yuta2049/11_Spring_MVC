@@ -1,12 +1,16 @@
-package com.epam.rd.onlineStore.service;
+package com.epam.rd.onlineStore.service.impl;
 
 import com.epam.rd.onlineStore.dto.CategoryDAO;
 import com.epam.rd.onlineStore.model.Category;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CategoryService {
 
+    @Autowired
     private CategoryDAO productDAO = new CategoryDAO();
 
     public CategoryService() {}

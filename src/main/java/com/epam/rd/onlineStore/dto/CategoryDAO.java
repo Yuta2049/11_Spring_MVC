@@ -1,10 +1,12 @@
 package com.epam.rd.onlineStore.dto;
 
 import com.epam.rd.onlineStore.model.Category;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CategoryDAO {
 
     public List<Category> findAll() {

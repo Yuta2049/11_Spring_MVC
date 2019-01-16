@@ -20,6 +20,10 @@
 
     <link rel="shortcut icon" href="images/favicon.ico" />
 
+    <!--<th:edit="${"/images/pencil.png"}>-->
+    <!--<th:url value="/images/delete.png" var="delete" />-->
+
+
 </head>
 
 <body>
@@ -66,10 +70,13 @@
             <b class="openCloseAddProduct" aria-hidden="true">x</b>
             <div id="ProductWindow">
 
-                <!--form th:object="{product}" id="add-product-form" method="post"-->
-            <form action="/products/new" method="post">
+            <!--<form action="/products/new" method="post">-->
+            <form action="/products/add" method="post">
 
 
+                <label>Id:</label>
+                <input required type="text" name="id" placeholder="Id">
+                <br />
 
                     <label>Наименование:</label>
                     <input required type="text" name="name" placeholder="Наименование">
@@ -106,13 +113,23 @@
         </div>
 
 
+        <!--  Кнопки админа -->
         <button id="openCloseAddProduct" class = "openCloseAddProduct">Добавить товар</button>
+        <!--  Кнопки админа (КОНЕЦ) -->
+
+
+
+        <!--<div id="result_form">-->
+            <!--ProductId: ${productId}-->
+            <!--ProductName: ${productName}-->
+        <!--</div>-->
+        <div id="result"></div>
 
 
         <ul class="products">
 
             <!--c:forEach items="${products}" var="product"-->
-                <div th:each="product : ${products}">
+                <span th:each="product : ${products}">
                     <!--<th:each="product : ${products}">-->
 
                 <!--c:if test="${category.id==product.category}"-->
@@ -121,12 +138,20 @@
                     <li class="product" th:id="@{'a'+${category.id}+${product.id}}">
 
                     <!--  Кнопки админа -->
-                        <a href="/products/${productIterator.id}/edit">
-                            <img src="${edit}" title="Редактировать товар" alt="Редактировать товар">
+                       <!--<button th:href="@{'/products/'+${product.id}+'/edit'}" class = "openCloseAddProduct">-->
+                            <!--<img src="/images/pencil.png" title="Редактировать товар" alt="Редактировать товар">-->
+                        <!--</button>-->
+                        <button onclick="crunchifyAjax()">Ajax</button>
+                        <!--<form action="" method="post"  id="ajax_form" >-->
+                          <!--productId:   <input name="productId"/>-->
+                            <!--<input type="submit" value="Submit">-->
+                        <!--</form>-->
+                        <a th:href="@{'/products/'+${product.id}+'/edit'}" class = "openCloseAddProduct">
+                            <img src="/images/pencil.png" title="Редактировать товар" alt="Редактировать товар">
                         </a>
 
-                        <a href="/products/${productIterator.id}/delete">
-                            <img src="${delete}" title="Удалить товар" alt="Удалить товар">
+                        <a th:href="@{'/products/'+${product.id}+'/delete'}" class = "openCloseAddProduct">
+                            <img src="/images/delete.png" title="Удалить товар" alt="Удалить товар">
                         </a>
 
                         <!--  Кнопки админа (КОНЕЦ) -->
@@ -161,7 +186,7 @@
                 </div>
 
             <!--/c:forEach-->
-            </div>
+            </span>
             <!--</th>-->
         </ul>
     <!--/c:forEach-->
@@ -178,6 +203,50 @@
             $('#shoppingCart').toggle();
         }
 
+    </script>
+
+<script>
+
+
+function crunchifyAjax() {
+        $.ajax({
+            url : '/ajaxtest',
+            success : function(data) {
+                $('#result').html(data);
+            }
+        });
+    }
+
+    </script>
+
+<script>
+/* Article FructCode.com */
+$( document ).ready(function() {
+$("#btn").click(
+function(){
+sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');
+return false;
+}
+);
+});
+
+function sendAjaxForm(result_form, ajax_form, url) {
+$.ajax({
+//url:     url, //url страницы (action_ajax_form.php)
+url:     /, //url страницы (action_ajax_form.php)
+type:     "POST", //метод отправки
+dataType: "html", //формат данных
+data: $("#"+ajax_form).serialize(),  // Сеарилизуем объект
+success: function(response) { //Данные отправлены успешно
+result = $.parseJSON(response);
+//$('#result_form').html('Имя: '+result.name+'<br>Телефон: '+result.phonenumber);
+$('#result_form').html('Id: '+result.productId+'<br>Наименование: '+result.productName);
+},
+error: function(response) { // Данные не отправлены
+$('#result_form').html('Ошибка. Данные не отправлены.');
+}
+});
+}
     </script>
 
 <script type="text/javascript" src="js/cart.js"></script>
