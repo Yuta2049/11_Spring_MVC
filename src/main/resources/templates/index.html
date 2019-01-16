@@ -68,35 +68,38 @@
         <div id="AddProductContainer">
             <h1>Товар</h1>
             <b class="openCloseAddProduct" aria-hidden="true">x</b>
-            <div id="ProductWindow">
+            <div id="ProductWindow2"></div>
+            <!--<div id="ProductWindow">-->
 
-            <!--<form action="/products/new" method="post">-->
-            <form action="/products/add" method="post">
+            <!--<div th:text = ${product.id}></div>-->
+                <!--<div th:text = ${product.name}></div>-->
+            <!--&lt;!&ndash;<form action="/products/new" method="post">&ndash;&gt;-->
+            <!--<form action="/products/add" method="post"> &lt;!&ndash;id="productEdit"&ndash;&gt;-->
 
 
-                <label>Id:</label>
-                <input required type="text" name="id" placeholder="Id">
-                <br />
+                <!--<label>Id:</label>-->
+                <!--<input required type="text" name="id" placeholder="Id">-->
+                <!--<br />-->
 
-                    <label>Наименование:</label>
-                    <input required type="text" name="name" placeholder="Наименование">
-                    <br />
+                    <!--<label>Наименование:</label>-->
+                    <!--<input required type="text" name="name" placeholder="Наименование">-->
+                    <!--<br />-->
 
-                    <label>Цена:</label>
-                    <input required type="text" name="price" placeholder="Цена"><br />
+                    <!--<label>Цена:</label>-->
+                    <!--<input required type="text" name="price" placeholder="Цена"><br />-->
 
-                <label>Категория:</label>
-                <input required type="text" name="category" placeholder="Категория"><br />
+                <!--<label>Категория:</label>-->
+                <!--<input required type="text" name="category" placeholder="Категория"><br />-->
 
-                <!--input type="submit" value="Сохранить"-->
-                    <!--<button-->
-                        <!--th:with="text=${product['new']} ? 'Добавить товар' : 'Сохранить товар'"-->
-                        <!--type="submit" th:text="${text}">Добавить товар</button>-->
-                <button type="submit">Добавить товар</button>
+                <!--&lt;!&ndash;input type="submit" value="Сохранить"&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button&ndash;&gt;-->
+                        <!--&lt;!&ndash;th:with="text=${product['new']} ? 'Добавить товар' : 'Сохранить товар'"&ndash;&gt;-->
+                        <!--&lt;!&ndash;type="submit" th:text="${text}">Добавить товар</button>&ndash;&gt;-->
+                <!--<button type="submit">Добавить товар</button>-->
 
-                </form>
+                <!--</form>-->
 
-            </div>
+            <!--</div>-->
 
         </div>
     </div>
@@ -141,7 +144,7 @@
                        <!--<button th:href="@{'/products/'+${product.id}+'/edit'}" class = "openCloseAddProduct">-->
                             <!--<img src="/images/pencil.png" title="Редактировать товар" alt="Редактировать товар">-->
                         <!--</button>-->
-                        <button th:onclick="'crunchifyAjax('+${product.id}+')'">Ajax</button>
+                        <button th:onclick="'crunchifyAjax('+${product.id}+')'" class = "openCloseAddProduct">Ajax</button>
                         <!--<form action="" method="post"  id="ajax_form" >-->
                           <!--productId:   <input name="productId"/>-->
                             <!--<input type="submit" value="Submit">-->
@@ -215,45 +218,53 @@
         });
     }*/
 function crunchifyAjax(productId) {
-        $.ajax({
+        /*$.ajax({
             url : '/products/'+productId+'/edit',
             success : function(data) {
                 $('#result').html(data);
             }
-        });
+            /success : function(callback){
+                $("#result").html(callback);
+            },
+        });*/
+
+        var url = '/products/'+productId+'/edit';
+        $("#ProductWindow2").load(url);
+        /*$("#ProductWindow2").load(url,$("#productEdit").serialize());*/
+
     }
 
     </script>
 
-<script>
-/* Article FructCode.com */
-$( document ).ready(function() {
-$("#btn").click(
-function(){
-sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');
-return false;
-}
-);
-});
+<!--<script>-->
+<!--/* Article FructCode.com */-->
+<!--$( document ).ready(function() {-->
+<!--$("#btn").click(-->
+<!--function(){-->
+<!--sendAjaxForm('result_form', 'ajax_form', 'action_ajax_form.php');-->
+<!--return false;-->
+<!--}-->
+<!--);-->
+<!--});-->
 
-function sendAjaxForm(result_form, ajax_form, url) {
-$.ajax({
-//url:     url, //url страницы (action_ajax_form.php)
-url:     /, //url страницы (action_ajax_form.php)
-type:     "POST", //метод отправки
-dataType: "html", //формат данных
-data: $("#"+ajax_form).serialize(),  // Сеарилизуем объект
-success: function(response) { //Данные отправлены успешно
-result = $.parseJSON(response);
-//$('#result_form').html('Имя: '+result.name+'<br>Телефон: '+result.phonenumber);
-$('#result_form').html('Id: '+result.productId+'<br>Наименование: '+result.productName);
-},
-error: function(response) { // Данные не отправлены
-$('#result_form').html('Ошибка. Данные не отправлены.');
-}
-});
-}
-    </script>
+<!--function sendAjaxForm(result_form, ajax_form, url) {-->
+<!--$.ajax({-->
+<!--//url:     url, //url страницы (action_ajax_form.php)-->
+<!--url:     /, //url страницы (action_ajax_form.php)-->
+<!--type:     "POST", //метод отправки-->
+<!--dataType: "html", //формат данных-->
+<!--data: $("#"+ajax_form).serialize(),  // Сеарилизуем объект-->
+<!--success: function(response) { //Данные отправлены успешно-->
+<!--result = $.parseJSON(response);-->
+<!--//$('#result_form').html('Имя: '+result.name+'<br>Телефон: '+result.phonenumber);-->
+<!--$('#result_form').html('Id: '+result.productId+'<br>Наименование: '+result.productName);-->
+<!--},-->
+<!--error: function(response) { // Данные не отправлены-->
+<!--$('#result_form').html('Ошибка. Данные не отправлены.');-->
+<!--}-->
+<!--});-->
+<!--}-->
+    <!--</script>-->
 
 <script type="text/javascript" src="js/cart.js"></script>
 
