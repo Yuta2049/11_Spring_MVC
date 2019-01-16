@@ -141,7 +141,7 @@
                        <!--<button th:href="@{'/products/'+${product.id}+'/edit'}" class = "openCloseAddProduct">-->
                             <!--<img src="/images/pencil.png" title="Редактировать товар" alt="Редактировать товар">-->
                         <!--</button>-->
-                        <button onclick="crunchifyAjax()">Ajax</button>
+                        <button th:onclick="'crunchifyAjax('+${product.id}+')'">Ajax</button>
                         <!--<form action="" method="post"  id="ajax_form" >-->
                           <!--productId:   <input name="productId"/>-->
                             <!--<input type="submit" value="Submit">-->
@@ -206,11 +206,17 @@
     </script>
 
 <script>
-
-
-function crunchifyAjax() {
+/*function crunchifyAjax() {
         $.ajax({
             url : '/ajaxtest',
+            success : function(data) {
+                $('#result').html(data);
+            }
+        });
+    }*/
+function crunchifyAjax(productId) {
+        $.ajax({
+            url : '/products/'+productId+'/edit',
             success : function(data) {
                 $('#result').html(data);
             }

@@ -58,14 +58,21 @@ public class ProductController {
 
 
 
-    @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
+//    @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
+    @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
     public @ResponseBody
-    String getTime() {
+    String getTime(@PathVariable("productId") long productId) {
 
-        Random rand = new Random();
-        float r = rand.nextFloat() * 100;
-        String result = "<br>Next Random # is <b>" + r + "</b>. Generated on <b>" + new Date().toString() + "</b>";
-        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + new Date().toString());
+//        Random rand = new Random();
+//        float r = rand.nextFloat() * 100;
+//        String result = "<br>Next Random # is <b>" + r + "</b>. Generated on <b>" + new Date().toString() + "</b>";
+//        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + new Date().toString());
+
+        Product product = this.productService.findById(productId);
+        String result = product.getId()+", "+product.getName();
+        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + productId);
+        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + result);
+
         return result;
     }
 
