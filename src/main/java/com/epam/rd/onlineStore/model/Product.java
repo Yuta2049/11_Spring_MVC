@@ -1,5 +1,9 @@
 package com.epam.rd.onlineStore.model;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Product {
 
     private long id;

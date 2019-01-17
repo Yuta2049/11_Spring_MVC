@@ -51,13 +51,14 @@ public class ProductController {
         return "index";
     }
 
-    @GetMapping("/products/new")
-    public String initCreationForm(Map<String, Object> model) {
-        Product product = new Product();
-        model.put("product", product);
-        return "index";
-        //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
-    }
+//    @GetMapping("/products/new")
+//    public String initCreationForm(Map<String, Object> model) {
+//        Product product = new Product();
+//        //model.put("isNewProduct", true);
+//        model.put("product", product);
+//        return "index";
+//        //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
+//    }
 
     @PostMapping("/products/new")
     public String processCreationForm(Product product, BindingResult result) {
@@ -70,30 +71,44 @@ public class ProductController {
         }
     }
 
-    @RequestMapping("/products/new")
-    public String processCreationForm2(Product product, BindingResult result) {
-        if (result.hasErrors()) {
-            //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
-            return "redirect:/";
-        } else {
-            this.productService.save(product);
-            return "redirect:/";
-        }
-    }
+//    @RequestMapping("/products/new")
+//    public String processCreationForm2(Product product, BindingResult result) {
+//        if (result.hasErrors()) {
+//            //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
+//            return "redirect:/";
+//        } else {
+//            this.productService.save(product);
+//            return "redirect:/";
+//        }
+//    }
 
 
     @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
     public //@ResponseBody
-    String getTime(Model model, @PathVariable("productId") long productId) {
+    String editProduct(Model model, @PathVariable("productId") long productId) {
+
+        System.out.println(productId);
+        System.out.println(this.productService.findById(productId));
 
         model.addAttribute("product", this.productService.findById(productId));
+        model.addAttribute("isNewProduct", false);
         //model.put("product", product);
-        return "ajax/createOrUpdateProductForm:: productEdit";
+        return "fragments/createOrUpdateProductForm:: productEdit";
     }
 
 
+    @RequestMapping(value = "/products/new", method = RequestMethod.GET)
+    public //@ResponseBody
+    String newProduct(Model model) {
 
-    //@PostMapping("/products/{productId}/edit")
+        model.addAttribute("product", new Product());
+        model.addAttribute("isNewProduct", true);
+        //model.put("product", product);
+        return "fragments/createOrUpdateProductForm:: productEdit";
+    }
+
+
+    @PostMapping("/products/{productId}/edit")
     public String processUpdateOwnerForm(@Valid Product product, BindingResult result, @PathVariable("productId") long productId) {
         if (result.hasErrors()) {
             //return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;

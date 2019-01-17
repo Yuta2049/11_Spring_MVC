@@ -68,7 +68,7 @@
         <div id="AddProductContainer">
             <h1>Товар</h1>
             <b class="openCloseAddProduct" aria-hidden="true">x</b>
-            <div id="ProductWindow2"></div>
+            <div id="ProductWindow"></div>
             <!--<div id="ProductWindow">-->
 
             <!--<div th:text = ${product.id}></div>-->
@@ -105,8 +105,6 @@
     </div>
 
 
-
-
     <!--c:forEach items="${categories}" var="category"-->
     <div th:each="category : ${categories}">
 
@@ -119,7 +117,6 @@
         <!--  Кнопки админа -->
         <button id="openCloseAddProduct" class = "openCloseAddProduct">Добавить товар</button>
         <!--  Кнопки админа (КОНЕЦ) -->
-
 
 
         <!--<div id="result_form">-->
@@ -209,14 +206,7 @@
     </script>
 
 <script>
-/*function crunchifyAjax() {
-        $.ajax({
-            url : '/ajaxtest',
-            success : function(data) {
-                $('#result').html(data);
-            }
-        });
-    }*/
+
 function crunchifyAjax(productId) {
         /*$.ajax({
             url : '/products/'+productId+'/edit',
@@ -229,7 +219,7 @@ function crunchifyAjax(productId) {
         });*/
 
         var url = '/products/'+productId+'/edit';
-        $("#ProductWindow2").load(url);
+        $("#ProductWindow").load(url);
     }
 
     </script>
