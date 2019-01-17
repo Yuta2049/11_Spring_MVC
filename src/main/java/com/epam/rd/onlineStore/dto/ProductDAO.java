@@ -44,7 +44,7 @@ public class ProductDAO {
 }
 
     public Product save(Product product) {
-        productList.add(product);
+        productList.set((int) product.getId(), product);
         return product;
     }
 

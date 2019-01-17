@@ -109,12 +109,13 @@ public class ProductController {
 
 
     @PostMapping("/products/{productId}/edit")
-    public String processUpdateOwnerForm(@Valid Product product, BindingResult result, @PathVariable("productId") long productId) {
+//    public String processUpdateOwnerForm(@Valid Product product, BindingResult result, @PathVariable("productId") long productId) {
+    public String processUpdateOwnerForm(@ModelAttribute Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
             //return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
             return "redirect:/";
         } else {
-            product.setId(productId);
+            //product.setId(productId);
             this.productService.save(product);
             //return "redirect:/products/{productId}";
             return "redirect:/";
