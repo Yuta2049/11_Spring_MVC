@@ -31,8 +31,6 @@ public class ProductController {
     private CategoryService categoryService = new CategoryService();
 
     @GetMapping("/")
-    //@RequestMapping("/")
-    //@RequestMapping("/index.html")
     public String index(Map<String, Object> model)
     //public ModelAndView index()
     {
@@ -47,55 +45,11 @@ public class ProductController {
         model.put("products", products);
         model.put("categories", categories);
 
+//        Product product = new Product();
+//        model.put("product", product);
 
-        Product product = new Product();
-        model.put("product", product);
-
-
-        //model.put("time", new Date());
-        //model.addAttribute("employees", manager.getAllEmployees());
-        //return "employeesListDisplay";
         return "index";
-        //return modelAndView;
-        //ModelAndView modelAndView = new ModelAndView();
-        //return modelAndView;
     }
-
-
-
-//    @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
-    @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
-    public //@ResponseBody
-    String getTime(Model model, @PathVariable("productId") long productId) {
-
-//        Random rand = new Random();
-//        float r = rand.nextFloat() * 100;
-//        String result = "<br>Next Random # is <b>" + r + "</b>. Generated on <b>" + new Date().toString() + "</b>";
-//        System.out.println("Debug Message from CrunchifySpringAjaxJQuery Controller.." + new Date().toString());
-
-
-//        Product product = this.productService.findById(productId);
-//        String result = product.getId()+", "+product.getName();
-//        return result;
-
-
-        //Product product = this.productService.findById(productId);
-        model.addAttribute("product", this.productService.findById(productId));
-        //model.put("product", product);
-        return "createOrUpdateProductForm:: productEdit";
-        //return "createOrUpdateProductForm";
-
-    }
-
-
-//    public String handlePostRequest(long productId, Model model) {
-//        Product product = this.productService.findById(productId);
-//        model.addAttribute(product);
-//        return "redirect:/";
-//        //return "index";
-//    }
-
-
 
     @GetMapping("/products/new")
     public String initCreationForm(Map<String, Object> model) {
@@ -127,15 +81,17 @@ public class ProductController {
         }
     }
 
-//    @GetMapping("/products/{productId}/edit")
-//    public String initUpdateOwnerForm(@PathVariable("productId") long productId, Model model) {
-//        Product product = this.productService.findById(productId);
-//        model.addAttribute(product);
-//        //model.put("product", product);
-//        //return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;rn
-//        //return "redirect:/index";
-//        return "redirect:/";
-//    }
+
+    @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
+    public //@ResponseBody
+    String getTime(Model model, @PathVariable("productId") long productId) {
+
+        model.addAttribute("product", this.productService.findById(productId));
+        //model.put("product", product);
+        return "ajax/createOrUpdateProductForm:: productEdit";
+    }
+
+
 
     //@PostMapping("/products/{productId}/edit")
     public String processUpdateOwnerForm(@Valid Product product, BindingResult result, @PathVariable("productId") long productId) {
@@ -151,18 +107,13 @@ public class ProductController {
     }
 
 
-
-
-
     @RequestMapping("/header.html")
-    public String header()
-    {
+    public String header() {
         return "header";
     }
 
     @RequestMapping("/footer.html")
-    public String footer()
-    {
+    public String footer() {
         return "footer";
     }
 
