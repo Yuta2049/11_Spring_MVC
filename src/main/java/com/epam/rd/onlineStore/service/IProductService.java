@@ -11,4 +11,6 @@ public interface IProductService {
     Product findById(long id);
 
     Product save(Product product);
+
+    boolean deleteById(long id);
 }

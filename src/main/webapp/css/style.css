@@ -118,7 +118,7 @@ h1 {
 }
 
 .product {
-    display: flex;
+    /*display: flex;*/
     text-align: center;
     margin: 30px;
 }

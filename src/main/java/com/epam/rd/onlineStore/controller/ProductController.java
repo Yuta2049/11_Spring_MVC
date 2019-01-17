@@ -86,13 +86,8 @@ public class ProductController {
     @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
     public //@ResponseBody
     String editProduct(Model model, @PathVariable("productId") long productId) {
-
-        System.out.println(productId);
-        System.out.println(this.productService.findById(productId));
-
         model.addAttribute("product", this.productService.findById(productId));
         model.addAttribute("isNewProduct", false);
-        //model.put("product", product);
         return "fragments/createOrUpdateProductForm:: productEdit";
     }
 
@@ -103,23 +98,24 @@ public class ProductController {
 
         model.addAttribute("product", new Product());
         model.addAttribute("isNewProduct", true);
-        //model.put("product", product);
         return "fragments/createOrUpdateProductForm:: productEdit";
     }
 
-
     @PostMapping("/products/{productId}/edit")
-//    public String processUpdateOwnerForm(@Valid Product product, BindingResult result, @PathVariable("productId") long productId) {
     public String processUpdateOwnerForm(@ModelAttribute Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
             //return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
             return "redirect:/";
         } else {
-            //product.setId(productId);
             this.productService.save(product);
-            //return "redirect:/products/{productId}";
             return "redirect:/";
         }
+    }
+
+    @RequestMapping("/products/{productId}/delete")
+    public String deleteProduct( @PathVariable("productId") long productId, Model model) {
+        this.productService.deleteById(productId);
+        return "redirect:/";
     }
 
 
@@ -132,5 +128,4 @@ public class ProductController {
     public String footer() {
         return "footer";
     }
-
 }
