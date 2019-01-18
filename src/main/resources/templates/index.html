@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Интернет-магазин "АВРОРА". Самый большой выбор звездолетов и планетарных станций в 9 вселенных. В наличии и под заказ</title>
+    <title>Интернет-магазин "АВРОРА". Самый большой выбор звездолетов и планетарных станций в 9 вселенных. В наличии и
+        под заказ</title>
 
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
@@ -14,11 +15,17 @@
 
     <script type="text/javascript" src="js/users.js"></script>
 
-    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="shortcut icon" href="images/favicon.ico"/>
 
 
-    <!--<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>-->
-    <!--<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+    <!--<meta name="_csrf" content="${_csrf.token}"/>-->
+    <!--&lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;-->
+    <!--<meta name="_csrf_header" content="${_csrf.headerName}"/>-->
+
 
     <!--<th:edit="${"/images/pencil.png"}>-->
     <!--<th:url value="/images/delete.png" var="delete" />-->
@@ -60,11 +67,11 @@
             <!--<button id="findProducts" onclick="findProducts()">Найти</button>-->
             <!--<div id="searchItems"></div>-->
 
-            <form method="post">
+            <!--<form method="post">-->
                 Найти:
                 <input id="findText">
-                <button id="findProducts" onclick="findProducts()">Найти</button>
-            </form>
+                <button id="findProducts" th:onclick="findProducts()">Найти</button>
+            <!--</form>-->
 
             <div id="searchItems"></div>
 
@@ -91,7 +98,7 @@
         </div>
 
         <!--  Кнопки админа -->
-        <button id="openCloseAddProduct" class = "openCloseAddProduct" th:onclick="newProduct()">Добавить товар</button>
+        <button id="openCloseAddProduct" class="openCloseAddProduct" th:onclick="newProduct()">Добавить товар</button>
         <!--  Кнопки админа (КОНЕЦ) -->
 
         <div id="result"></div>
@@ -100,7 +107,7 @@
         <ul class="products">
 
             <!--c:forEach items="${products}" var="product"-->
-                <span th:each="product : ${products}">
+            <span th:each="product : ${products}">
                     <!--<th:each="product : ${products}">-->
 
                 <!--c:if test="${category.id==product.category}"-->
@@ -110,7 +117,8 @@
 
                     <!--  Кнопки админа -->
                         <!--<button th:onclick="'crunchifyAjax('+${product.id}+')'" class = "openCloseAddProduct">Ajax</button>-->
-                        <input type ="image" src="/images/pencil.png" th:onclick="'editProduct('+${product.id}+')'" class = "openCloseAddProduct">
+                        <input type="image" src="/images/pencil.png" th:onclick="'editProduct('+${product.id}+')'"
+                               class="openCloseAddProduct">
 
                         <!--<input type ="image" src="/images/delete.png" th:onclick="'deleteProduct('+${product.id}+')'" class = "openCloseAddProduct">-->
 
@@ -121,7 +129,8 @@
 
                         <!--  Кнопки админа (КОНЕЦ) -->
 
-                        <div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}" th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
+                        <div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}"
+                             th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
                             <div class="image">
                                 <!--th:href="@{/order/details(orderId=${o.id})}-->
@@ -132,7 +141,8 @@
                             </div>
                         </div>
 
-                        <div class="hiddenSection" th:id="@{'c'+${category.id}+${product.id}}" th:onclick="@{'hideHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
+                        <div class="hiddenSection" th:id="@{'c'+${category.id}+${product.id}}"
+                             th:onclick="@{'hideHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
                             <div class="image">
                                 <img th:src="@{'images/'+${product.image}}">
@@ -149,11 +159,11 @@
                     </li>
                 </div>
 
-            <!--/c:forEach-->
+                <!--/c:forEach-->
             </span>
             <!--</th>-->
         </ul>
-    <!--/c:forEach-->
+        <!--/c:forEach-->
     </div>
 
 </div>
@@ -167,9 +177,6 @@
             $('#shoppingCart').toggle();
         }
 
-    </script>
-
-<script>
 
 function editProduct(productId) {
         /*$.ajax({
@@ -196,8 +203,35 @@ function newProduct(productId) {
     }
 
 
-    </script>
+    function findProducts() {
 
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+
+        $.ajax({
+            url : "/products/search",
+            type : "post",
+            data : {
+                "productName" : $("#findText").val()
+            },
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader(header, token);
+    },
+            success : function(data) {
+                /*console.log(data);
+                $("#searchItems").load(url);*/
+                $('#searchItems').html(data);
+            },
+            error : function() {
+                console.log("There was an error");
+            }
+        });
+
+
+
+    }
+</script>
 
 <script type="text/javascript" src="js/cart.js"></script>
 
