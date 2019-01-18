@@ -1,6 +1,5 @@
 package com.epam.rd.onlineStore.controller;
 
-
 import com.epam.rd.onlineStore.model.Category;
 import com.epam.rd.onlineStore.model.Product;
 import com.epam.rd.onlineStore.service.IProductService;
@@ -22,8 +21,6 @@ import java.util.Random;
 @Controller
 public class ProductController {
 
-    private static final String VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM = "createOrUpdateProductForm";
-
     @Autowired
     private IProductService productService = new ProductService();
 
@@ -32,33 +29,15 @@ public class ProductController {
 
     @GetMapping("/")
     public String index(Map<String, Object> model)
-    //public ModelAndView index()
     {
-
         List<Product> products = productService.findAll();
         List<Category> categories = categoryService.findAll();
-
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("products", products);
-//        modelAndView.addObject("categories", categories);
 
         model.put("products", products);
         model.put("categories", categories);
 
-//        Product product = new Product();
-//        model.put("product", product);
-
         return "index";
     }
-
-//    @GetMapping("/products/new")
-//    public String initCreationForm(Map<String, Object> model) {
-//        Product product = new Product();
-//        //model.put("isNewProduct", true);
-//        model.put("product", product);
-//        return "index";
-//        //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
-//    }
 
     @RequestMapping(value = "/products/new", method = RequestMethod.GET)
     public //@ResponseBody
@@ -71,7 +50,6 @@ public class ProductController {
     @PostMapping("/products/new")
     public String processCreationForm(@ModelAttribute Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
             return "redirect:/";
         } else {
             this.productService.add(product);
@@ -84,14 +62,12 @@ public class ProductController {
     String editProduct(Model model, @PathVariable("productId") long productId) {
         model.addAttribute("product", this.productService.findById(productId));
         model.addAttribute("isNewProduct", false);
-        return "fragments/createOrUpdateProductForm:: productEdit";
+        return "fragments/createOrUpdateProductForm :: productEdit";
     }
-
 
     @PostMapping("/products/{productId}/edit")
     public String processUpdateOwnerForm(@ModelAttribute Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            //return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
             return "redirect:/";
         } else {
             this.productService.save(product);
@@ -100,11 +76,25 @@ public class ProductController {
     }
 
     @RequestMapping("/products/{productId}/delete")
-    public String deleteProduct( @PathVariable("productId") long productId, Model model) {
+    public String deleteProduct(@PathVariable("productId") long productId, Model model) {
         this.productService.deleteById(productId);
         return "redirect:/";
     }
 
+    @RequestMapping("/products/search")
+    public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model) {
+        List<Product> productList = this.productService.findByName(productName);
+        model.addAttribute("productList", productList);
+        return "fragments/findProduct :: productFind";
+    }
+
+//    @RequestMapping("/products/search")
+//    public String searchProductsByPrice(@RequestParam(value = "productPrice") String productPrice, Model model) {
+//        List<Product> productList = this.productService.findByPrice(productPrice);
+//        model.addAttribute("productList", productList);
+//
+//        return "fragments/findProductForm :: productFind";
+//    }
 
     @RequestMapping("/header.html")
     public String header() {

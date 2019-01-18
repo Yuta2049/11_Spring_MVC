@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ProductDAO {
@@ -44,7 +45,6 @@ public class ProductDAO {
     }
 
     public Product save(Product product) {
-        //productList.set((int) product.getId(), product);
         Product productInList = findById(product.getId());
         int index = productList.indexOf(productInList);
         productList.set(index, product);
@@ -56,12 +56,19 @@ public class ProductDAO {
     }
 
     public boolean deleteById(long id) {
-        //return productList.remove((int) id);
         return productList.removeIf(x -> x.getId()==id);
     }
 
     public boolean add(Product product) {
         return productList.add(product);
+    }
+
+    public List<Product> findByName(String productName) {
+        return productList.stream().filter(o->o.getName().contains(productName)).collect(Collectors.toList());
+    }
+
+    public List<Product> findByPrice(String productPrice) {
+        return productList.stream().filter(o->String.valueOf(o.getPrice()).contains(productPrice)).collect(Collectors.toList());
     }
 
 }

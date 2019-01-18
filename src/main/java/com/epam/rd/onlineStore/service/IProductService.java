@@ -15,4 +15,8 @@ public interface IProductService {
     boolean deleteById(long id);
 
     boolean add(Product product);
+
+    List<Product> findByName(String productName);
+
+    List<Product> findByPrice(String productPrice);
 }

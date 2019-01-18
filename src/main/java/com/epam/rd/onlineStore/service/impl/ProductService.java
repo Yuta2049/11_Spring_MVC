@@ -40,4 +40,14 @@ public class ProductService implements IProductService {
     public boolean add(Product product) {
         return productDAO.add(product);
     }
+
+    @Override
+    public List<Product> findByName(String productName) {
+        return productDAO.findByName(productName);
+    }
+
+    @Override
+    public List<Product> findByPrice(String productPrice) {
+        return productDAO.findByPrice(productPrice);
+    }
 }

@@ -7,30 +7,8 @@
 
 <body>
 
-<!--<div id="AddProductWindow">-->
-<!--<div id="AddProductContainer">-->
-<!--<h1>Товар</h1>-->
-<!--<b class="openCloseAddProduct" aria-hidden="true">x</b>-->
 <div th:fragment="productEdit" id="ProductWindow">
 
-    <!--<form action="/products/new" method="post">-->
-    <!--<form action="/products/add" method="post" id="productEdit">-->
-        <!--<form th:object="${product}" action="/products/{product.id}/add" method="post" id="productEdit">-->
-    <!--th:href="@{'/products/'+${product.id}+'/edit'}"-->
-
-    <!--<form-->
-            <!--th:with="actionText=${product['new']} ? 'add' : 'edit'}"-->
-            <!--th:object="${product}" action="'/products/'+{product.id}+actionText" method="post" id="productEdit">-->
-    <!--th:with="actionText=${isNewProduct} ? 'new' : ${product.id}+'/edit'}"-->
-
-            <!--<div th:text="${isNewProduct}"></div>-->
-
-                    <!--th:with="actionText=${isNewProduct} ? 'new' : 'edit'"-->
-                    <!--th:object="${product}" action="@{'/products/'+${actionText}}" method="post" id="productEdit">-->
-    <!--action="@{'/products/'+${product.id}+'/edit'}" method="post" id="productEdit">-->
-
-    <!--<form th:object="${product}"-->
-                <!--th:action="@{'/products/'+${product.id}+'/edit'}" method="post" id="productEdit">-->
 
     <form th:object="${product}"
           th:with="actionText=${isNewProduct} ? 'products/new' : 'products/'+${product.id}+'/edit/'"
@@ -51,26 +29,13 @@
         <label>Картинка:</label>
         <input required type="text" name="image" placeholder="Картинка" th:field="*{image}"><br/>
 
-                <!--<button-->
-                        <!--th:with="text=${isNew} ? 'Добавить товар' : 'Сохранить товар'"-->
-                        <!--type="submit" th:text="${text}">Добавть товар-->
-                <!--</button>-->
-
-        <!--<button-->
-            <!--th:with="text=${isNewProduct} ? 'Добавить товар' : 'Сохранить товар'"-->
-            <!--type="submit" th:text="${text}">Добавить товар-->
-        <!--</button>-->
         <button
-            type="submit">Сохранить товар
+                type="submit">Сохранить товар
         </button>
-
 
     </form>
 
 </div>
-<!--</div>-->
-<!--</div>-->
-
 
 </body>
 
