@@ -60,4 +60,8 @@ public class ProductDAO {
         return productList.removeIf(x -> x.getId()==id);
     }
 
+    public boolean add(Product product) {
+        return productList.add(product);
+    }
+
 }

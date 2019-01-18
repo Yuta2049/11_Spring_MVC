@@ -83,7 +83,7 @@
         </div>
 
         <!--  Кнопки админа -->
-        <button id="openCloseAddProduct" class = "openCloseAddProduct">Добавить товар</button>
+        <button id="openCloseAddProduct" class = "openCloseAddProduct" th:onclick="newProduct()">Добавить товар</button>
         <!--  Кнопки админа (КОНЕЦ) -->
 
         <div id="result"></div>
@@ -175,6 +175,19 @@ function editProduct(productId) {
         var url = '/products/'+productId+'/edit';
         $("#ProductWindow").load(url);
     }
+
+function newProduct(productId) {
+        /*$.ajax({
+            url : '/products/'+productId+'/edit',
+            success : function(data) {
+                $('#result').html(data);
+            }
+        });*/
+
+        var url = '/products/new';
+        $("#ProductWindow").load(url);
+    }
+
 
     </script>
 

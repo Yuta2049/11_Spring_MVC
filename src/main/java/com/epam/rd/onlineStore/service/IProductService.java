@@ -13,4 +13,6 @@ public interface IProductService {
     Product save(Product product);
 
     boolean deleteById(long id);
+
+    boolean add(Product product);
 }

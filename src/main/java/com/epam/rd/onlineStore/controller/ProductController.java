@@ -60,28 +60,24 @@ public class ProductController {
 //        //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
 //    }
 
+    @RequestMapping(value = "/products/new", method = RequestMethod.GET)
+    public //@ResponseBody
+    String addNewProduct(Model model) {
+        model.addAttribute("product", new Product());
+        model.addAttribute("isNewProduct", true);
+        return "fragments/createOrUpdateProductForm:: productEdit";
+    }
+
     @PostMapping("/products/new")
-    public String processCreationForm(Product product, BindingResult result) {
+    public String processCreationForm(@ModelAttribute Product product, BindingResult result, Model model) {
         if (result.hasErrors()) {
             //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
             return "redirect:/";
         } else {
-            this.productService.save(product);
+            this.productService.add(product);
             return "redirect:/";
         }
     }
-
-//    @RequestMapping("/products/new")
-//    public String processCreationForm2(Product product, BindingResult result) {
-//        if (result.hasErrors()) {
-//            //return VIEWS_PRODUCT_CREATE_OR_UPDATE_FORM;
-//            return "redirect:/";
-//        } else {
-//            this.productService.save(product);
-//            return "redirect:/";
-//        }
-//    }
-
 
     @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
     public //@ResponseBody
@@ -91,15 +87,6 @@ public class ProductController {
         return "fragments/createOrUpdateProductForm:: productEdit";
     }
 
-
-    @RequestMapping(value = "/products/new", method = RequestMethod.GET)
-    public //@ResponseBody
-    String newProduct(Model model) {
-
-        model.addAttribute("product", new Product());
-        model.addAttribute("isNewProduct", true);
-        return "fragments/createOrUpdateProductForm:: productEdit";
-    }
 
     @PostMapping("/products/{productId}/edit")
     public String processUpdateOwnerForm(@ModelAttribute Product product, BindingResult result, Model model) {

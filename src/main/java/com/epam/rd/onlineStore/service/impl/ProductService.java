@@ -35,4 +35,9 @@ public class ProductService implements IProductService {
     public boolean deleteById(long id) {
         return productDAO.deleteById(id);
     }
+
+    @Override
+    public boolean add(Product product) {
+        return productDAO.add(product);
+    }
 }

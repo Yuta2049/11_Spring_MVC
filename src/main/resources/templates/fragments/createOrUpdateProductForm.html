@@ -28,9 +28,13 @@
                     <!--th:with="actionText=${isNewProduct} ? 'new' : 'edit'"-->
                     <!--th:object="${product}" action="@{'/products/'+${actionText}}" method="post" id="productEdit">-->
     <!--action="@{'/products/'+${product.id}+'/edit'}" method="post" id="productEdit">-->
-    <form th:object="${product}"
-                th:action="@{'/products/'+${product.id}+'/edit'}" method="post" id="productEdit">
 
+    <!--<form th:object="${product}"-->
+                <!--th:action="@{'/products/'+${product.id}+'/edit'}" method="post" id="productEdit">-->
+
+    <form th:object="${product}"
+          th:with="actionText=${isNewProduct} ? 'products/new' : 'products/'+${product.id}+'/edit/'"
+          th:action=${actionText} method="post" id="productEdit">
 
         <label>Id:</label>
         <input required type="text" name="id" placeholder="Id" th:field="*{id}"><br/>
@@ -57,7 +61,7 @@
             <!--type="submit" th:text="${text}">Добавить товар-->
         <!--</button>-->
         <button
-            type="submit">Редактировать товар
+            type="submit">Сохранить товар
         </button>
 
 
