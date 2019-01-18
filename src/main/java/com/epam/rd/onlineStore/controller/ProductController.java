@@ -85,7 +85,7 @@ public class ProductController {
     public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model) {
         List<Product> productList = this.productService.findByName(productName);
         model.addAttribute("productList", productList);
-        return "fragments/findProduct :: productFind";
+        return "fragments/findProductForm :: productFind";
     }
 
 //    @RequestMapping("/products/search")
