@@ -1,6 +1,3 @@
-//$(document).ready ( function(){
-// $("#block").css("background-color", "yellow");
-//});
 
 $(document).ready ( function(){
     $("#header").load("header.html");
@@ -20,6 +17,31 @@ $('.openCloseSearch').click(function () {
 $('.openCloseAddProduct').click(function () {
     $('#AddProductWindow').toggle();
     })
+
+    function findProducts() {
+
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+        $.ajax({
+            url : "/products/search",
+            type : "post",
+            data : {
+                "productName" : $("#findText").val()
+            },
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader(header, token);
+    },
+            success : function(data) {
+                /*console.log(data);
+                $("#searchItems").load(url);*/
+                $('#searchItems').html(data);
+            },
+            error : function() {
+                console.log("There was an error");
+            }
+        });
+    }
 
 
 

@@ -25,10 +25,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
-//    }
+        http
+            .authorizeRequests()
+                .antMatchers("/", "/header.html", "/footer.html", "/images/*", "/css/*", "/js/*").permitAll()
+                .anyRequest().authenticated();
+        http
+//            .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+            .formLogin()
+                .permitAll()
+            .and()
+                .logout()
+                .permitAll();
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {

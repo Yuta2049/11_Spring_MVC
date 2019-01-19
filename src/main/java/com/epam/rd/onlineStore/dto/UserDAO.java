@@ -21,10 +21,10 @@ public class UserDAO {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         Set<Privilege> privilegesUser = new HashSet<>();
-        privilegesUser.add(new Privilege(1, "User"));
+        privilegesUser.add(new Privilege(2, "ROLE_USER"));
 
         Set<Privilege> privilegesAdmin = new HashSet<>();
-        privilegesAdmin.add(new Privilege(1, "Admin"));
+        privilegesAdmin.add(new Privilege(1, "ROLE_ADMIN"));
 
         userList.add(new User(1, "admin", bCryptPasswordEncoder.encode("123"), privilegesAdmin));
         userList.add(new User(2, "ivan", bCryptPasswordEncoder.encode("123"), privilegesUser));

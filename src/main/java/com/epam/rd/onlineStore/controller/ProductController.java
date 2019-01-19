@@ -88,13 +88,6 @@ public class ProductController {
         return "fragments/findProductForm :: productFind";
     }
 
-//    @RequestMapping("/products/search")
-//    public String searchProductsByPrice(@RequestParam(value = "productPrice") String productPrice, Model model) {
-//        List<Product> productList = this.productService.findByPrice(productPrice);
-//        model.addAttribute("productList", productList);
-//
-//        return "fragments/findProductForm :: productFind";
-//    }
 
     @RequestMapping("/header.html")
     public String header() {

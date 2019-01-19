@@ -14,9 +14,10 @@
     <!--/c:if-->
         </div>
     <!--c:if test="${userName != null && userName!= ''}"-->
-        <div th:if="${userName != null && userName != ''}">
-        <li id="userName">${userName}</li>
-        <li id="logout">
+        <!--<div th:if="${userName != null && userName != ''}">-->
+        <div sec:authorize="isAuthenticated()">
+            <li sec:authentication="name" id="userName"></li>
+            <li id="logout">
             <a href="logout">Выход</a>
         </li>
     <!--/c:if-->

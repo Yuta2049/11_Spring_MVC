@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -68,9 +68,9 @@
             <!--<div id="searchItems"></div>-->
 
             <!--<form method="post">-->
-                Найти:
-                <input id="findText">
-                <button id="findProducts" th:onclick="findProducts()">Найти</button>
+            Найти:
+            <input id="findText">
+            <button id="findProducts" th:onclick="findProducts()">Найти</button>
             <!--</form>-->
 
             <div id="searchItems"></div>
@@ -98,10 +98,12 @@
         </div>
 
         <!--  Кнопки админа -->
-        <button id="openCloseAddProduct" class="openCloseAddProduct" th:onclick="newProduct()">Добавить товар</button>
+        <button sec:authorize="hasRole('ROLE_ADMIN')"
+                id="openCloseAddProduct" class="openCloseAddProduct" th:onclick="newProduct()">Добавить товар
+        </button>
         <!--  Кнопки админа (КОНЕЦ) -->
 
-        <div id="result"></div>
+        <!--<div id="result"></div>-->
 
 
         <ul class="products">
@@ -116,16 +118,17 @@
                     <li class="product" th:id="@{'a'+${category.id}+${product.id}}">
 
                     <!--  Кнопки админа -->
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
                         <!--<button th:onclick="'crunchifyAjax('+${product.id}+')'" class = "openCloseAddProduct">Ajax</button>-->
                         <input type="image" src="/images/pencil.png" th:onclick="'editProduct('+${product.id}+')'"
                                class="openCloseAddProduct">
 
-                        <!--<input type ="image" src="/images/delete.png" th:onclick="'deleteProduct('+${product.id}+')'" class = "openCloseAddProduct">-->
-
+                            <!--<input type ="image" src="/images/delete.png" th:onclick="'deleteProduct('+${product.id}+')'" class = "openCloseAddProduct">-->
 
                         <a th:href="@{'/products/'+${product.id}+'/delete'}">
                             <img src="/images/delete.png" title="Удалить товар" alt="Удалить товар">
                         </a>
+                        </div>
 
                         <!--  Кнопки админа (КОНЕЦ) -->
 
@@ -164,19 +167,18 @@
             <!--</th>-->
         </ul>
         <!--/c:forEach-->
+        <!--</>-->
+
     </div>
 
-</div>
+    <div id="footer">
+    </div>
 
-<div id="footer">
-</div>
-
-<script>
+    <script>
 
         function openClose() {
             $('#shoppingCart').toggle();
         }
-
 
 function editProduct(productId) {
         /*$.ajax({
@@ -203,39 +205,11 @@ function newProduct(productId) {
     }
 
 
-    function findProducts() {
+    </script>
 
-    var token = $('#_csrf').attr('content');
-    var header = $('#_csrf_header').attr('content');
+    <script type="text/javascript" src="js/cart.js"></script>
 
-
-        $.ajax({
-            url : "/products/search",
-            type : "post",
-            data : {
-                "productName" : $("#findText").val()
-            },
-    beforeSend: function (xhr) {
-        xhr.setRequestHeader(header, token);
-    },
-            success : function(data) {
-                /*console.log(data);
-                $("#searchItems").load(url);*/
-                $('#searchItems').html(data);
-            },
-            error : function() {
-                console.log("There was an error");
-            }
-        });
-
-
-
-    }
-</script>
-
-<script type="text/javascript" src="js/cart.js"></script>
-
-<script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/search.js"></script>
 
 
 </body>
