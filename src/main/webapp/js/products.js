@@ -7,6 +7,36 @@
     });
 });*/
 
+
+$('.buttonProductDelete').on('click', function() {
+
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+    var productId = this.dataset.productId;
+
+    url = '/products/'+productId+'/delete';
+
+        $.ajax({
+            contentType: 'application/json',
+            url : url,
+            type : "delete",
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success : function(data) {
+                /*console.log(data);
+                $("#searchItems").load(url);*/
+                location.reload();
+            },
+            error : function() {
+                /*console.log("There was an error");*/
+                alert('delete not successful')
+            }
+        });
+})
+
 function showHiddenTab(productSectionName, tabName, tabName2) {
 
     var i, x;

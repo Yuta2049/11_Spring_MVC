@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class ProductRestController {
@@ -55,10 +53,15 @@ public class ProductRestController {
 
     @PutMapping("/products/{productId}/edit")
     public Product processUpdateOwnerForm(@RequestBody Product product) {
-        System.out.println(product.getId());
-        System.out.println(product.getName());
-        System.out.println(product.getCategory());
         return this.productService.save(product);
     }
+
+
+    @DeleteMapping ("/products/{productId}/delete")
+    public boolean deleteProduct(@PathVariable("productId") long productId) {
+        return this.productService.deleteById(productId);
+        //return "redirect:/";
+    }
+
 
 }

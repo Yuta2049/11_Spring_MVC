@@ -87,12 +87,6 @@ public class ProductController {
 //        return "fragments/findProductForm :: productFind";
 //    }
 
-    @RequestMapping("/fragments/createOrUpdateProductForm")
-    public String productForm() {
-        return "fragments/createOrUpdateProductForm :: productEdit";
-    }
-
-
     @RequestMapping("/header.html")
     public String header() {
         return "header";

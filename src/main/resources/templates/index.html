@@ -11,8 +11,6 @@
 
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 
-    <script type="text/javascript" src="js/products.js"></script>
-
     <script type="text/javascript" src="js/users.js"></script>
 
     <link rel="shortcut icon" href="images/favicon.ico"/>
@@ -159,9 +157,12 @@
 
                             <!--<input type ="image" src="/images/delete.png" th:onclick="'deleteProduct('+${product.id}+')'" class = "openCloseAddProduct">-->
 
-                        <a th:href="@{'/products/'+${product.id}+'/delete'}">
-                            <img src="/images/delete.png" title="Удалить товар" alt="Удалить товар">
-                        </a>
+                        <!--<a th:href="@{'/products/'+${product.id}+'/delete'}">-->
+                            <!--<img src="/images/delete.png" title="Удалить товар" alt="Удалить товар">-->
+                        <!--</a>-->
+
+                        <input type="image" class="buttonProductDelete" src="/images/delete.png" th:data-product-id="${product.id}">
+
                         </div>
 
                         <!--  Кнопки админа (КОНЕЦ) -->
@@ -204,6 +205,8 @@
         <!--</>-->
 
     </div>
+
+</div>
 
     <div id="footer">
     </div>
@@ -306,12 +309,43 @@ function newProduct() {
 
     }
 
+<!--function deleteProduct() {-->
+
+    <!--var token = $('#_csrf').attr('content');-->
+    <!--var header = $('#_csrf_header').attr('content');-->
+
+    <!--var productId = $("#editProductId").val();-->
+
+    <!--url2 = '/products/'+productId+'/edit';-->
+
+        <!--$.ajax({-->
+            <!--contentType: 'application/json',-->
+            <!--url : url2,-->
+            <!--type : "delete",-->
+            <!--dataType: 'json',-->
+    <!--beforeSend: function (xhr) {-->
+        <!--xhr.setRequestHeader(header, token);-->
+    <!--},-->
+            <!--success : function(data) {-->
+                <!--/*console.log(data);-->
+                <!--$("#searchItems").load(url);*/-->
+                <!--alert('done');-->
+            <!--},-->
+            <!--error : function() {-->
+                <!--console.log("There was an error");-->
+            <!--}-->
+        <!--});-->
+    <!--}-->
+
+
 
     </script>
 
     <script type="text/javascript" src="js/cart.js"></script>
 
     <script type="text/javascript" src="js/search.js"></script>
+
+    <script type="text/javascript" src="js/products.js"></script>
 
 
 </body>
