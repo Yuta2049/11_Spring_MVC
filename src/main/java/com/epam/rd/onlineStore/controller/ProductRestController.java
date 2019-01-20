@@ -19,34 +19,12 @@ public class ProductRestController {
     @Autowired
     private CategoryService categoryService = new CategoryService();
 
-//    @GetMapping("/")
-//    public List<Product> all() {
-//        return productService.findAll();
-//    }
-
-
-    @RequestMapping(value = "/products/new", method = RequestMethod.GET)
-    public //@ResponseBody
-//    String addNewProduct(Model model) {
-    Product addNewProduct() {
-//        model.addAttribute("product", new Product());
-//        model.addAttribute("isNewProduct", true);
-//        return "fragments/createOrUpdateProductForm:: productEdit";
-        return new Product();
-    }
-
     @PostMapping("/products/new")
-    public String processCreationForm(@ModelAttribute Product product, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "redirect:/";
-//        } else {
-            this.productService.add(product);
-            return "redirect:/";
-//        }
+    public boolean processCreationForm(@RequestBody Product product) {
+        return this.productService.add(product);
     }
 
-
-    @RequestMapping(value = "/products/{productId}/edit", method = RequestMethod.GET)
+    @GetMapping(value = "/products/{productId}/edit")
     public Product editProduct(@PathVariable("productId") long productId) {
         return this.productService.findById(productId);
     }
@@ -56,12 +34,9 @@ public class ProductRestController {
         return this.productService.save(product);
     }
 
-
     @DeleteMapping ("/products/{productId}/delete")
     public boolean deleteProduct(@PathVariable("productId") long productId) {
         return this.productService.deleteById(productId);
-        //return "redirect:/";
     }
-
 
 }

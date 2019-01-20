@@ -29,9 +29,9 @@ $('.openCloseAddProduct').click(function () {
             data : {
                 "productName" : $("#findText").val()
             },
-    beforeSend: function (xhr) {
-        xhr.setRequestHeader(header, token);
-    },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             success : function(data) {
                 /*console.log(data);
                 $("#searchItems").load(url);*/

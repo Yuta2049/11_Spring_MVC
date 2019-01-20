@@ -15,18 +15,8 @@
 
     <link rel="shortcut icon" href="images/favicon.ico"/>
 
-
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-
-
-    <!--<meta name="_csrf" content="${_csrf.token}"/>-->
-    <!--&lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;-->
-    <!--<meta name="_csrf_header" content="${_csrf.headerName}"/>-->
-
-
-    <!--<th:edit="${"/images/pencil.png"}>-->
-    <!--<th:url value="/images/delete.png" var="delete" />-->
 
 </head>
 
@@ -83,8 +73,7 @@
             <b class="openCloseAddProduct" aria-hidden="true">x</b>
             <div id="ProductWindow">
 
-                <form th:object="${product}"
-                      method="put" id="productEdit">
+                <form id="ProductSave" method="put">
 
                     <label>Id:</label>
                     <input id="editProductId" required type="text" name="id" placeholder="Id"><br/>
@@ -101,19 +90,16 @@
                     <label>Картинка:</label>
                     <input id="editProductImage" required type="text" name="image" placeholder="Картинка"><br/>
 
-                    <button
-                            type="submit">Сохранить товар
-                    </button>
+                    <!--<button class="editProductSave"-->
+                            <!--type="submit">Сохранить товар-->
+                    <!--</button>-->
 
-                    <input type="image" src="/images/pencil.png" onclick="editProductSave()"
-                           >
+                    <input type="button" id="newProductSave" value="Добавить товар">
+
+                    <input type="button" id="editProductSave" value="Сохранить товар">
 
 
                 </form>
-
-
-
-
 
             </div>
 
@@ -131,7 +117,7 @@
 
         <!--  Кнопки админа -->
         <button sec:authorize="hasRole('ROLE_ADMIN')"
-                id="openCloseAddProduct" class="openCloseAddProduct" th:onclick="newProduct()">Добавить товар
+                id="buttonProductNew" class="openCloseAddProduct buttonProductNew">Добавить товар
         </button>
         <!--  Кнопки админа (КОНЕЦ) -->
 
@@ -152,16 +138,17 @@
                     <!--  Кнопки админа -->
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                         <!--<button th:onclick="'crunchifyAjax('+${product.id}+')'" class = "openCloseAddProduct">Ajax</button>-->
-                        <input type="image" src="/images/pencil.png" th:onclick="'editProduct('+${product.id}+')'"
-                               class="openCloseAddProduct">
+                        <input type="image" src="/images/pencil.png" th:data-product-id="${product.id}"
+                               class="openCloseAddProduct buttonProductEdit">
 
                             <!--<input type ="image" src="/images/delete.png" th:onclick="'deleteProduct('+${product.id}+')'" class = "openCloseAddProduct">-->
 
-                        <!--<a th:href="@{'/products/'+${product.id}+'/delete'}">-->
+                            <!--<a th:href="@{'/products/'+${product.id}+'/delete'}">-->
                             <!--<img src="/images/delete.png" title="Удалить товар" alt="Удалить товар">-->
-                        <!--</a>-->
+                            <!--</a>-->
 
-                        <input type="image" class="buttonProductDelete" src="/images/delete.png" th:data-product-id="${product.id}">
+                        <input type="image" class="buttonProductDelete" src="/images/delete.png"
+                               th:data-product-id="${product.id}">
 
                         </div>
 
@@ -208,144 +195,14 @@
 
 </div>
 
-    <div id="footer">
-    </div>
+<div id="footer">
+</div>
 
-    <script>
+<script type="text/javascript" src="js/cart.js"></script>
 
-        function openClose() {
-            $('#shoppingCart').toggle();
-        }
+<script type="text/javascript" src="js/search.js"></script>
 
-<!--function editProduct(productId) {-->
-        <!--/*$.ajax({-->
-            <!--url : '/products/'+productId+'/edit',-->
-            <!--success : function(data) {-->
-                <!--$('#result').html(data);-->
-            <!--}-->
-        <!--});*/-->
-
-        <!--var url = '/products/'+productId+'/edit';-->
-        <!--$("#ProductWindow").load(url);-->
-    <!--}-->
-
-
-function editProduct(productId) {
-        /*$.ajax({
-            url : '/products/'+productId+'/edit',
-            success : function(data) {
-                $('#result').html(data);
-            }
-        });*/
-
-        $.ajax({
-            url : '/products/'+productId+'/edit',
-            success : function(data) {
-                /*$('#result').html(data);*/
-                /*$("#ProductWindow").load("/fragments/createOrUpdateProductForm");*/
-                $("#editProductId").val(data.id);
-                $("#editProductName").val(data.name);
-                $("#editProductCategory").val(data.category);
-                $("#editProductPrice").val(data.price);
-                $("#editProductImage").val(data.image);
-            }
-        });
-
-    }
-
-function editProductSave() {
-
-    var token = $('#_csrf').attr('content');
-    var header = $('#_csrf_header').attr('content');
-
-    var productId = $("#editProductId").val();
-    var productName = $("#editProductName").val();
-    var productCategory = $("#editProductCategory").val();
-    var productPrice = $("#editProductPrice").val();
-    var productImage = $("#editProductImage").val();
-
-    var product = {id : productId,
-                  name : productName,
-                  category : productCategory,
-                  price : productPrice,
-                  image : productImage};
-
-    console.log(productName);
-    console.log(JSON.stringify(product));
-
-    url2 = '/products/'+productId+'/edit';
-
-        $.ajax({
-             contentType: 'application/json',
-            url : url2,
-            type : "put",
-             dataType: 'json',
-            data : JSON.stringify(product),
-    beforeSend: function (xhr) {
-        xhr.setRequestHeader(header, token);
-    },
-            success : function(data) {
-                /*console.log(data);
-                $("#searchItems").load(url);*/
-                alert('done');
-            },
-            error : function() {
-                console.log("There was an error");
-            }
-        });
-    }
-
-function newProduct() {
-        /*$.ajax({
-            url : '/products/'+productId+'/edit',
-            success : function(data) {
-                $('#result').html(data);
-            }
-        });*/
-
-        var url = '/products/new';
-        /*$("#ProductWindow").load("fragments/createOrUpdateProductForm:: productEdit");*/
-        $("#ProductWindow").load("/fragments/createOrUpdateProductForm");
-
-    }
-
-<!--function deleteProduct() {-->
-
-    <!--var token = $('#_csrf').attr('content');-->
-    <!--var header = $('#_csrf_header').attr('content');-->
-
-    <!--var productId = $("#editProductId").val();-->
-
-    <!--url2 = '/products/'+productId+'/edit';-->
-
-        <!--$.ajax({-->
-            <!--contentType: 'application/json',-->
-            <!--url : url2,-->
-            <!--type : "delete",-->
-            <!--dataType: 'json',-->
-    <!--beforeSend: function (xhr) {-->
-        <!--xhr.setRequestHeader(header, token);-->
-    <!--},-->
-            <!--success : function(data) {-->
-                <!--/*console.log(data);-->
-                <!--$("#searchItems").load(url);*/-->
-                <!--alert('done');-->
-            <!--},-->
-            <!--error : function() {-->
-                <!--console.log("There was an error");-->
-            <!--}-->
-        <!--});-->
-    <!--}-->
-
-
-
-    </script>
-
-    <script type="text/javascript" src="js/cart.js"></script>
-
-    <script type="text/javascript" src="js/search.js"></script>
-
-    <script type="text/javascript" src="js/products.js"></script>
+<script type="text/javascript" src="js/products.js"></script>
 
 
 </body>

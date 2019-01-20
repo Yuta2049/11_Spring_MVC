@@ -1,6 +1,10 @@
 var itemCount = 0;
 var priceTotal = 0;
 
+        function openClose() {
+            $('#shoppingCart').toggle();
+        }
+
 
 // Добавляем товары в корзину
 $('.add').click(function () {

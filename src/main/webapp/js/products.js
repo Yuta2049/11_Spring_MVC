@@ -1,11 +1,106 @@
-/*$(document).ready(function() {
-    $.ajax({
-        url: "/products"
-    }).then(function(data) {
-       $('.greeting-id').append(data.id);
-       $('.greeting-content').append(data.content);
-    });
-});*/
+$('.buttonProductEdit').on('click', function() {
+
+    $('#newProductSave').hide();
+    $('#editProductSave').show();
+
+    var productId = this.dataset.productId;
+
+        $.ajax({
+            url : '/products/'+productId+'/edit',
+            success : function(data) {
+                /*$('#result').html(data);*/
+                /*$("#ProductWindow").load("/fragments/createOrUpdateProductForm");*/
+                $("#editProductId").val(data.id);
+                $("#editProductName").val(data.name);
+                $("#editProductCategory").val(data.category);
+                $("#editProductPrice").val(data.price);
+                $("#editProductImage").val(data.image);
+            }
+        });
+
+    })
+
+$('.editProductSave').on('click', function() {
+
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+    var productId = $("#editProductId").val();
+    var productName = $("#editProductName").val();
+    var productCategory = $("#editProductCategory").val();
+    var productPrice = $("#editProductPrice").val();
+    var productImage = $("#editProductImage").val();
+
+    var product = {id : productId,
+                  name : productName,
+                  category : productCategory,
+                  price : productPrice,
+                  image : productImage};
+
+    url = '/products/'+productId+'/edit';
+
+        $.ajax({
+            contentType: 'application/json',
+            url : url,
+            type : 'put',
+            dataType: 'json',
+            data : JSON.stringify(product),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success : function(data) {
+                /*console.log(data);
+                $("#searchItems").load(url);*/
+                location.reload();
+            },
+            error : function() {
+                console.log("There was an error");
+            }
+        });
+    })
+
+
+$('#buttonProductNew').on('click', function() {
+    $('#newProductSave').show();
+    $('#editProductSave').hide();
+    })
+
+$('#newProductSave').on('click', function() {
+
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+    var productId = $("#editProductId").val();
+    var productName = $("#editProductName").val();
+    var productCategory = $("#editProductCategory").val();
+    var productPrice = $("#editProductPrice").val();
+    var productImage = $("#editProductImage").val();
+
+    var product = {id : productId,
+                  name : productName,
+                  category : productCategory,
+                  price : productPrice,
+                  image : productImage};
+
+    url = '/products/'+productId+'/edit';
+
+        $.ajax({
+            contentType: 'application/json',
+            url : url,
+            type : 'post',
+            dataType: 'json',
+            data : JSON.stringify(product),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success : function(data) {
+                location.reload();
+            },
+            error : function() {
+                alert('create product not successful');
+            }
+        });
+    })
 
 
 $('.buttonProductDelete').on('click', function() {
@@ -26,13 +121,10 @@ $('.buttonProductDelete').on('click', function() {
                 xhr.setRequestHeader(header, token);
             },
             success : function(data) {
-                /*console.log(data);
-                $("#searchItems").load(url);*/
                 location.reload();
             },
             error : function() {
-                /*console.log("There was an error");*/
-                alert('delete not successful')
+                alert('delete not successful');
             }
         });
 })
