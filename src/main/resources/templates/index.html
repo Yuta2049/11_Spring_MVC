@@ -83,7 +83,41 @@
         <div id="AddProductContainer">
             <h1>Товар</h1>
             <b class="openCloseAddProduct" aria-hidden="true">x</b>
-            <div id="ProductWindow"></div>
+            <div id="ProductWindow">
+
+                <form th:object="${product}"
+                      method="put" id="productEdit">
+
+                    <label>Id:</label>
+                    <input id="editProductId" required type="text" name="id" placeholder="Id"><br/>
+
+                    <label>Наименование:</label>
+                    <input id="editProductName" required type="text" name="name" placeholder="Наименование"><br/>
+
+                    <label>Цена:</label>
+                    <input id="editProductPrice" required type="text" name="price" placeholder="Цена"><br/>
+
+                    <label>Категория:</label>
+                    <input id="editProductCategory" required type="text" name="category" placeholder="Категория"><br/>
+
+                    <label>Картинка:</label>
+                    <input id="editProductImage" required type="text" name="image" placeholder="Картинка"><br/>
+
+                    <button
+                            type="submit">Сохранить товар
+                    </button>
+
+                    <input type="image" src="/images/pencil.png" onclick="editProductSave()"
+                           >
+
+
+                </form>
+
+
+
+
+
+            </div>
 
         </div>
     </div>
@@ -180,6 +214,19 @@
             $('#shoppingCart').toggle();
         }
 
+<!--function editProduct(productId) {-->
+        <!--/*$.ajax({-->
+            <!--url : '/products/'+productId+'/edit',-->
+            <!--success : function(data) {-->
+                <!--$('#result').html(data);-->
+            <!--}-->
+        <!--});*/-->
+
+        <!--var url = '/products/'+productId+'/edit';-->
+        <!--$("#ProductWindow").load(url);-->
+    <!--}-->
+
+
 function editProduct(productId) {
         /*$.ajax({
             url : '/products/'+productId+'/edit',
@@ -188,11 +235,64 @@ function editProduct(productId) {
             }
         });*/
 
-        var url = '/products/'+productId+'/edit';
-        $("#ProductWindow").load(url);
+        $.ajax({
+            url : '/products/'+productId+'/edit',
+            success : function(data) {
+                /*$('#result').html(data);*/
+                /*$("#ProductWindow").load("/fragments/createOrUpdateProductForm");*/
+                $("#editProductId").val(data.id);
+                $("#editProductName").val(data.name);
+                $("#editProductCategory").val(data.category);
+                $("#editProductPrice").val(data.price);
+                $("#editProductImage").val(data.image);
+            }
+        });
+
     }
 
-function newProduct(productId) {
+function editProductSave() {
+
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+    var productId = $("#editProductId").val();
+    var productName = $("#editProductName").val();
+    var productCategory = $("#editProductCategory").val();
+    var productPrice = $("#editProductPrice").val();
+    var productImage = $("#editProductImage").val();
+
+    var product = {id : productId,
+                  name : productName,
+                  category : productCategory,
+                  price : productPrice,
+                  image : productImage};
+
+    console.log(productName);
+    console.log(JSON.stringify(product));
+
+    url2 = '/products/'+productId+'/edit';
+
+        $.ajax({
+             contentType: 'application/json',
+            url : url2,
+            type : "put",
+             dataType: 'json',
+            data : JSON.stringify(product),
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader(header, token);
+    },
+            success : function(data) {
+                /*console.log(data);
+                $("#searchItems").load(url);*/
+                alert('done');
+            },
+            error : function() {
+                console.log("There was an error");
+            }
+        });
+    }
+
+function newProduct() {
         /*$.ajax({
             url : '/products/'+productId+'/edit',
             success : function(data) {
@@ -201,7 +301,9 @@ function newProduct(productId) {
         });*/
 
         var url = '/products/new';
-        $("#ProductWindow").load(url);
+        /*$("#ProductWindow").load("fragments/createOrUpdateProductForm:: productEdit");*/
+        $("#ProductWindow").load("/fragments/createOrUpdateProductForm");
+
     }
 
 

@@ -1,3 +1,12 @@
+/*$(document).ready(function() {
+    $.ajax({
+        url: "/products"
+    }).then(function(data) {
+       $('.greeting-id').append(data.id);
+       $('.greeting-content').append(data.content);
+    });
+});*/
+
 function showHiddenTab(productSectionName, tabName, tabName2) {
 
     var i, x;
