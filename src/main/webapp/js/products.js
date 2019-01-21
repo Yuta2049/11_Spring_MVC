@@ -1,8 +1,3 @@
-$(document).ready ( function(){
-    $("#header").load("header.html");
-    $("#footer").load("footer.html");
-});
-
 $('.buttonProductEdit').on('click', function() {
 
     $('#newProductSave').hide();
@@ -87,7 +82,7 @@ $('#newProductSave').on('click', function() {
                   price : productPrice,
                   image : productImage};
 
-    url = '/products/new';
+    var url = '/products/new';
 
         $.ajax({
             contentType: 'application/json',
@@ -134,33 +129,32 @@ $('.buttonProductDelete').on('click', function() {
         });
 })
 
-function showHiddenTab(productSectionName, tabName, tabName2) {
-
+//function showHiddenTab() {
+$('.visibleSection').on('click', function() {
     var i, x;
+    var productId = this.dataset.productId;
 
-    var elem = document.getElementById(tabName);
+    var visibleSection = document.getElementById('b'+productId);
 
-    $('#' + tabName).hide();
+    $('#'+'b'+productId).hide();
 
-    var elem3 = document.getElementById(tabName2);
-    elem3.style.display = "flex";
+    var hiddenSection = document.getElementById('c'+productId);
+    hiddenSection.style.display = "flex";
 
-    var productSection = document.getElementById(productSectionName);
+    var productSection = document.getElementById('a'+productId);
     productSection.style.width = '100%';
 
     // Закрываем другие скрытые секции
-
     x = document.getElementsByClassName("visibleSection");
     for (i = 0; i < x.length; i++) {
-        if (x[i] != elem) {
+        if (x[i] != visibleSection) {
             x[i].removeAttribute('style');
         }
     }
 
-    var elem2 = document.getElementById(tabName2);
     x = document.getElementsByClassName("hiddenSection");
     for (i = 0; i < x.length; i++) {
-        if (x[i] != elem2) {
+        if (x[i] != hiddenSection) {
             x[i].removeAttribute('style');
         }
     }
@@ -172,18 +166,19 @@ function showHiddenTab(productSectionName, tabName, tabName2) {
             x2[i].removeAttribute('style');
         }
     }
-}
+})
 
-function hideHiddenTab(productSectionName, tabName, tabName2) {
+//function hideHiddenTab(productSectionName, tabName, tabName2) {
+$('.hiddenSection').on('click', function() {
+    var productId = this.dataset.productId;
 
-    $('#' + tabName).show();
+    $('#'+'b'+productId).show();
 
-    var elem3 = document.getElementById(tabName2);
-    elem3.removeAttribute('style');
+    var hiddenSection = document.getElementById('c'+productId);
+    hiddenSection.removeAttribute('style');
 
-    var productSection = document.getElementById(productSectionName);
+    var productSection = document.getElementById('a'+productId);
     productSection.removeAttribute('style');
-
-}
+})
 
 
