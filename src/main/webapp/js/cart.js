@@ -1,9 +1,10 @@
 var itemCount = 0;
 var priceTotal = 0;
 
-        function openClose() {
-            $('#shoppingCart').toggle();
-        }
+$('.openCloseCart').on('click', function() {
+    alert('cart');
+    $('#shoppingCart').toggle();
+});
 
 
 // Добавляем товары в корзину
@@ -49,10 +50,10 @@ function calcAmount() {
   $('#productsTotal').text(productsTotal + " галактических кредитов");
 }
 
-// Hide and Show Cart Items
-$('.openCloseCart').click(function () {
-  $('#shoppingCart').toggle();
-});
+//// Hide and Show Cart Items
+//$('.openCloseCart').click(function () {
+//  $('#shoppingCart').toggle();
+//});
 
 
 // Очистить корзину (оформить заказ)

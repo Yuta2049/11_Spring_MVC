@@ -11,7 +11,9 @@
 
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 
-    <script type="text/javascript" src="js/users.js"></script>
+    <!--<script type="text/javascript" src="js/cart.js"></script>-->
+
+    <!--<script type="text/javascript" src="js/search.js"></script>-->
 
     <link rel="shortcut icon" href="images/favicon.ico"/>
 
@@ -127,16 +129,16 @@
         <ul class="products">
 
             <!--c:forEach items="${products}" var="product"-->
-            <span th:each="product : ${products}">
+            <!--<span th:each="product : ${products}">-->
                     <!--<th:each="product : ${products}">-->
 
                 <!--c:if test="${category.id==product.category}"-->
-                <div th:if="${category.id==product.category}">
+                <!--<span th:if="${category.id==product.category}">-->
 
-                    <li class="product" th:id="@{'a'+${category.id}+${product.id}}">
+                    <li class="product" th:each="product : ${products}" th:if="${category.id==product.category}" th:id="@{'a'+${category.id}+${product.id}}">
 
                     <!--  Кнопки админа -->
-                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <span sec:authorize="hasRole('ROLE_ADMIN')">
                         <!--<button th:onclick="'crunchifyAjax('+${product.id}+')'" class = "openCloseAddProduct">Ajax</button>-->
                         <input type="image" src="/images/pencil.png" th:data-product-id="${product.id}"
                                class="openCloseAddProduct buttonProductEdit">
@@ -150,7 +152,7 @@
                         <input type="image" class="buttonProductDelete" src="/images/delete.png"
                                th:data-product-id="${product.id}">
 
-                        </div>
+                        </span>
 
                         <!--  Кнопки админа (КОНЕЦ) -->
 
@@ -182,10 +184,10 @@
                         </div>
 
                     </li>
-                </div>
+                <!--</span>-->
 
                 <!--/c:forEach-->
-            </span>
+            <!--</span>-->
             <!--</th>-->
         </ul>
         <!--/c:forEach-->
@@ -198,9 +200,9 @@
 <div id="footer">
 </div>
 
-<script type="text/javascript" src="js/cart.js"></script>
+<!--<script type="text/javascript" src="js/cart.js"></script>-->
 
-<script type="text/javascript" src="js/search.js"></script>
+<!--<script type="text/javascript" src="js/search.js"></script>-->
 
 <script type="text/javascript" src="js/products.js"></script>
 

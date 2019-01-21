@@ -1,3 +1,8 @@
+$(document).ready ( function(){
+    $("#header").load("header.html");
+    $("#footer").load("footer.html");
+});
+
 $('.buttonProductEdit').on('click', function() {
 
     $('#newProductSave').hide();

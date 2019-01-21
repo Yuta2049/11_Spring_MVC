@@ -1,15 +1,11 @@
 
-$(document).ready ( function(){
-    $("#header").load("header.html");
-    $("#footer").load("footer.html");
-});
 
-function openCloseSearch() {
-    $('#searchWindow').toggle();
-}
+//function openCloseSearch() {
+//    $('#searchWindow').toggle();
+//}
 
 // Показать и скрыть окно поиска
-$('.openCloseSearch').click(function () {
+$('.openCloseSearch').on('click', function() {
     $('#searchWindow').toggle();
 });
 
