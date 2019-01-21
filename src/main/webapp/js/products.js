@@ -42,7 +42,7 @@ $('#editProductSave').on('click', function() {
                   price : productPrice,
                   image : productImage};
 
-    url = '/products/'+productId+'/edit';
+    var url = '/products/'+productId+'/edit';
 
         $.ajax({
             contentType: 'application/json',
@@ -141,7 +141,6 @@ function showHiddenTab(productSectionName, tabName, tabName2) {
     var elem = document.getElementById(tabName);
 
     $('#' + tabName).hide();
-    //$('#'+tabName2).show();
 
     var elem3 = document.getElementById(tabName2);
     elem3.style.display = "flex";
@@ -166,7 +165,7 @@ function showHiddenTab(productSectionName, tabName, tabName2) {
         }
     }
 
-    x2 = document.getElementsByClassName("product");
+    var x2 = document.getElementsByClassName("product");
     for (i = 0; i < x2.length; i++) {
         if (x2[i] != productSection) {
             //x2[i].style.flexBasis = '';
@@ -178,9 +177,8 @@ function showHiddenTab(productSectionName, tabName, tabName2) {
 function hideHiddenTab(productSectionName, tabName, tabName2) {
 
     $('#' + tabName).show();
-    //$('#'+tabName2).hide();
 
-    elem3 = document.getElementById(tabName2);
+    var elem3 = document.getElementById(tabName2);
     elem3.removeAttribute('style');
 
     var productSection = document.getElementById(productSectionName);

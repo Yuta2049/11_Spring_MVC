@@ -23,14 +23,6 @@ public class Product {
         this.image = image;
     }
 
-//    public Product(String name, int category, double price, String image) {
-//        this.id = ++maxId;
-//        this.name = name;
-//        this.category = category;
-//        this.price = price;
-//        this.image = image;
-//    }
-
     public void generateId(Product product) {
         if (product.id == 0) {
             product.id = ++maxId;

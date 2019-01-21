@@ -16,30 +16,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         User user = userService.findUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         return new MyUserPrincipal(user);
-
-//        //User userObject = UserDAO.findUserByLogin(username);
-//        User userObject = userService.findUserByLogin(username);
-//
-//        if (userObject != null) {
-//            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-//
-//            return new User(
-//                    //userObject.getUsername(),
-//                    ((com.epam.rd.onlineStore.model.User) userObject).getLogin(),
-//                    userObject.getPassword(),
-//                    authorities
-//            );
-//        }
-//
-//        throw new UsernameNotFoundException(
-//                "User '" + username + "' not found.");
     }
 
 }

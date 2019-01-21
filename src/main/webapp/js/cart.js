@@ -31,7 +31,7 @@ function calcAmount() {
   console.log(prices);
 
   var productsAmount = 0;
-  for (i = 0; i < prices.length; i++) {
+  for (let i = 0; i < prices.length; i++) {
     productsAmount += parseInt(prices[i].textContent);
   }
 

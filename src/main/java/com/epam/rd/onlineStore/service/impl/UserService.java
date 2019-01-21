@@ -14,7 +14,7 @@ public class UserService implements IUserService {
     @Autowired
     private UserDAO userDAO = new UserDAO();
 
-    public UserService() {}
+//    public UserService() {}
 
     @Override
     public List<User> findAll() {

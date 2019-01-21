@@ -1,7 +1,6 @@
 
 // Показать и скрыть окно поиска
 $('.openCloseSearch').on('click', function() {
-    alert('search');
     $('#searchWindow').toggle();
 })
 
@@ -11,7 +10,8 @@ $('.openCloseAddProduct').click(function () {
 
 $('#findProducts').on('click', function() {
 
-    if ($("#findText").val() != '') {
+    var findText = $('#findText').val();
+    if (findText != '') {
 
         var token = $('#_csrf').attr('content');
         var header = $('#_csrf_header').attr('content');
@@ -20,15 +20,12 @@ $('#findProducts').on('click', function() {
                 url : "/products/search",
                 type : "get",
                 data : {
-                    "productName" : $("#findText").val()
+                    "productName" : findText
                 },
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
                 success : function(data) {
-                    /*console.log(data);
-                    $("#searchItems").load(url);*/
-                    //$('#searchItems').html(data);
                     findProducts(data);
                 },
                 error : function() {
@@ -42,34 +39,27 @@ $('#findProducts').on('click', function() {
     function findProducts(filteredProducts) {
 
         var searchItemsDiv = document.getElementById('searchItems');
-
         $("#searchItems").empty();
-
         var textCat = '<ul class="products">';
-
         searchItemsDiv.insertAdjacentHTML('beforeEnd', textCat);
 
-        var findText = $('#findText').val();
+        for(var i = 0; i < filteredProducts.length; i++) {
 
-            for(var i = 0; i < filteredProducts.length; i++) {
+            var text = '<li class="product">';
+            text += '<div class="image">';
+            text += '<img src="images/' + filteredProducts[i].image + '">';
+            text += '</div>';
+            text += '<div class="productName">';
+            text += filteredProducts[i].name;
+            text += '</div>';
+            text += '</li>';
 
-                var text = '<li class="product">';
+            searchItemsDiv.insertAdjacentHTML('beforeEnd', text);
+        }
 
-                text += '<div class="image">';
-                text += '<img src="images/' + filteredProducts[i].image + '">';
-                text += '</div>';
-                text += '<div class="productName">';
-                text += filteredProducts[i].name;
-                text += '</div>';
+        textCat = '</ul>';
 
-                text += '</li>';
-
-                searchItemsDiv.insertAdjacentHTML('beforeEnd', text);
-            }
-
-            textCat = '</ul>';
-
-            searchItemsDiv.insertAdjacentHTML('beforeEnd', textCat);
+        searchItemsDiv.insertAdjacentHTML('beforeEnd', textCat);
     }
 
 

@@ -14,7 +14,7 @@ public class ProductService implements IProductService {
     @Autowired
     private ProductDAO productDAO = new ProductDAO();
 
-    public ProductService() {}
+//    public ProductService() {}
 
     @Override
     public List<Product> findAll() {
