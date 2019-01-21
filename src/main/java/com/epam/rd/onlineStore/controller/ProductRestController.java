@@ -1,13 +1,13 @@
 package com.epam.rd.onlineStore.controller;
 
-import com.epam.rd.onlineStore.model.Category;
 import com.epam.rd.onlineStore.model.Product;
 import com.epam.rd.onlineStore.service.IProductService;
 import com.epam.rd.onlineStore.service.impl.CategoryService;
 import com.epam.rd.onlineStore.service.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -37,6 +37,11 @@ public class ProductRestController {
     @DeleteMapping ("/products/{productId}/delete")
     public boolean deleteProduct(@PathVariable("productId") long productId) {
         return this.productService.deleteById(productId);
+    }
+
+    @RequestMapping("/products/search")
+    public List<Product> searchProductsByName(@RequestParam(value = "productName") String productName) {
+        return this.productService.findByName(productName);
     }
 
 }

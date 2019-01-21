@@ -20,7 +20,7 @@ $('.buttonProductEdit').on('click', function() {
 
     })
 
-$('.editProductSave').on('click', function() {
+$('#editProductSave').on('click', function() {
 
     var token = $('#_csrf').attr('content');
     var header = $('#_csrf_header').attr('content');
@@ -82,7 +82,7 @@ $('#newProductSave').on('click', function() {
                   price : productPrice,
                   image : productImage};
 
-    url = '/products/'+productId+'/edit';
+    url = '/products/new';
 
         $.ajax({
             contentType: 'application/json',
