@@ -11,10 +11,6 @@
 
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 
-    <!--<script type="text/javascript" src="js/cart.js"></script>-->
-
-    <!--<script type="text/javascript" src="js/search.js"></script>-->
-
     <link rel="shortcut icon" href="images/favicon.ico"/>
 
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
@@ -52,19 +48,10 @@
         <div id="searchItemsContainer">
             <h1>Поиск</h1>
             <b class="openCloseSearch" aria-hidden="true">x</b>
-            <!--Найти:-->
-            <!--<input id="findText">-->
-            <!--<button id="findProducts" onclick="findProducts()">Найти</button>-->
-            <!--<div id="searchItems"></div>-->
-
-            <!--<form method="post">-->
             Найти:
             <input id="findText">
             <button id="findProducts">Найти</button>
-            <!--</form>-->
-
             <div id="searchItems"></div>
-
         </div>
     </div>
 
@@ -77,8 +64,7 @@
 
                 <form id="ProductSave" method="put">
 
-                    <label>Id:</label>
-                    <input id="editProductId" required type="text" name="id" placeholder="Id"><br/>
+                    <input id="editProductId" required type="hidden" name="id" placeholder="Id" >
 
                     <label>Наименование:</label>
                     <input id="editProductName" required type="text" name="name" placeholder="Наименование"><br/>
@@ -93,7 +79,7 @@
                     <input id="editProductImage" required type="text" name="image" placeholder="Картинка"><br/>
 
                     <!--<button class="editProductSave"-->
-                            <!--type="submit">Сохранить товар-->
+                    <!--type="submit">Сохранить товар-->
                     <!--</button>-->
 
                     <input type="button" id="newProductSave" value="Добавить товар">
@@ -123,75 +109,51 @@
         </button>
         <!--  Кнопки админа (КОНЕЦ) -->
 
-        <!--<div id="result"></div>-->
-
-
         <ul class="products">
 
-            <!--c:forEach items="${products}" var="product"-->
-            <!--<span th:each="product : ${products}">-->
-                    <!--<th:each="product : ${products}">-->
+            <li class="product" th:each="product : ${products}" th:if="${category.id==product.category}"
+                th:id="@{'a'+${category.id}+${product.id}}">
 
-                <!--c:if test="${category.id==product.category}"-->
-                <!--<span th:if="${category.id==product.category}">-->
+                <!--  Кнопки админа -->
+                <input sec:authorize="hasRole('ROLE_ADMIN')" type="image" src="/images/pencil.png"
+                       th:data-product-id="${product.id}"
+                       class="openCloseAddProduct buttonProductEdit">
 
-                    <li class="product" th:each="product : ${products}" th:if="${category.id==product.category}" th:id="@{'a'+${category.id}+${product.id}}">
+                <input sec:authorize="hasRole('ROLE_ADMIN')" type="image" class="buttonProductDelete"
+                       src="/images/delete.png"
+                       th:data-product-id="${product.id}">
+                <!--  Кнопки админа (КОНЕЦ) -->
 
-                    <!--  Кнопки админа -->
-                        <span sec:authorize="hasRole('ROLE_ADMIN')">
-                        <!--<button th:onclick="'crunchifyAjax('+${product.id}+')'" class = "openCloseAddProduct">Ajax</button>-->
-                        <input type="image" src="/images/pencil.png" th:data-product-id="${product.id}"
-                               class="openCloseAddProduct buttonProductEdit">
+                <div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}"
+                     th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
-                            <!--<input type ="image" src="/images/delete.png" th:onclick="'deleteProduct('+${product.id}+')'" class = "openCloseAddProduct">-->
+                    <div class="image">
+                        <!--th:href="@{/order/details(orderId=${o.id})}-->
+                        <img th:src="@{'images/'+${product.image}}">
+                    </div>
 
-                            <!--<a th:href="@{'/products/'+${product.id}+'/delete'}">-->
-                            <!--<img src="/images/delete.png" title="Удалить товар" alt="Удалить товар">-->
-                            <!--</a>-->
+                    <div class="productName" th:text=${product.name}>
+                    </div>
+                </div>
 
-                        <input type="image" class="buttonProductDelete" src="/images/delete.png"
-                               th:data-product-id="${product.id}">
+                <div class="hiddenSection" th:id="@{'c'+${category.id}+${product.id}}"
+                     th:onclick="@{'hideHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
 
-                        </span>
-
-                        <!--  Кнопки админа (КОНЕЦ) -->
-
-                        <div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}"
-                             th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
-
-                            <div class="image">
-                                <!--th:href="@{/order/details(orderId=${o.id})}-->
-                                <img th:src="@{'images/'+${product.image}}">
-                            </div>
-
-                            <div class="productName" th:text=${product.name}>
-                            </div>
-                        </div>
-
-                        <div class="hiddenSection" th:id="@{'c'+${category.id}+${product.id}}"
-                             th:onclick="@{'hideHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">
-
-                            <div class="image">
-                                <img th:src="@{'images/'+${product.image}}">
-                            </div>
+                    <div class="image">
+                        <img th:src="@{'images/'+${product.image}}">
+                    </div>
 
 
-                            <div class="price" th:text=${product.price}>
-                            </div>
+                    <div class="price" th:text=${product.price}>
+                    </div>
 
-                            <button class="add">Да, я хочу этот корабль!</button>
+                    <button class="add">Да, я хочу этот корабль!</button>
 
-                        </div>
+                </div>
 
-                    </li>
-                <!--</span>-->
+            </li>
 
-                <!--/c:forEach-->
-            <!--</span>-->
-            <!--</th>-->
         </ul>
-        <!--/c:forEach-->
-        <!--</>-->
 
     </div>
 

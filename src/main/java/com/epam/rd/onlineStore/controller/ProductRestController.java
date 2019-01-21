@@ -30,7 +30,7 @@ public class ProductRestController {
     }
 
     @PutMapping("/products/{productId}/edit")
-    public Product processUpdateOwnerForm(@RequestBody Product product) {
+    public Product editProductSave(@RequestBody Product product) {
         return this.productService.save(product);
     }
 
@@ -39,7 +39,8 @@ public class ProductRestController {
         return this.productService.deleteById(productId);
     }
 
-    @RequestMapping("/products/search")
+    //@RequestMapping("/products/search")
+    @GetMapping("/products/search")
     public List<Product> searchProductsByName(@RequestParam(value = "productName") String productName) {
         return this.productService.findByName(productName);
     }

@@ -37,6 +37,7 @@ public class ProductDAO {
         products.add(new Product(15, "BubbleShip (Oblivion)", 3, 300000, "bubbleship_oblivion.jpg"));
         products.add(new Product(16, "Пепелац (Кин-Дза-Дза)", 3, 300000, "pepelaz_kin_dza_dza.jpg"));
 
+        Product.setMaxId(16);
         this.productList = products;
     }
 
@@ -60,6 +61,7 @@ public class ProductDAO {
     }
 
     public boolean add(Product product) {
+        product.generateId(product);
         return productList.add(product);
     }
 

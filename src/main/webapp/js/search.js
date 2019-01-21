@@ -1,14 +1,9 @@
 
-
-//function openCloseSearch() {
-//    $('#searchWindow').toggle();
-//}
-
 // Показать и скрыть окно поиска
 $('.openCloseSearch').on('click', function() {
+    alert('search');
     $('#searchWindow').toggle();
-});
-
+})
 
 $('.openCloseAddProduct').click(function () {
     $('#AddProductWindow').toggle();
@@ -16,28 +11,31 @@ $('.openCloseAddProduct').click(function () {
 
 $('#findProducts').on('click', function() {
 
-    var token = $('#_csrf').attr('content');
-    var header = $('#_csrf_header').attr('content');
+    if ($("#findText").val() != '') {
 
-        $.ajax({
-            url : "/products/search",
-            type : "get",
-            data : {
-                "productName" : $("#findText").val()
-            },
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            success : function(data) {
-                /*console.log(data);
-                $("#searchItems").load(url);*/
-                //$('#searchItems').html(data);
-                findProducts(data);
-            },
-            error : function() {
-                alert("There was an error");
-            }
-        });
+        var token = $('#_csrf').attr('content');
+        var header = $('#_csrf_header').attr('content');
+
+            $.ajax({
+                url : "/products/search",
+                type : "get",
+                data : {
+                    "productName" : $("#findText").val()
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success : function(data) {
+                    /*console.log(data);
+                    $("#searchItems").load(url);*/
+                    //$('#searchItems').html(data);
+                    findProducts(data);
+                },
+                error : function() {
+                    alert("There was an error");
+                }
+            });
+        }
     })
 
 
