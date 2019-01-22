@@ -1,6 +1,6 @@
 package com.epam.rd.onlineStore.service.impl;
 
-import com.epam.rd.onlineStore.dto.UserDAO;
+import com.epam.rd.onlineStore.dao.UserDAO;
 import com.epam.rd.onlineStore.model.User;
 import com.epam.rd.onlineStore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

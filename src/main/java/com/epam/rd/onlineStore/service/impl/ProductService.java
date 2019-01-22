@@ -1,6 +1,6 @@
 package com.epam.rd.onlineStore.service.impl;
 
-import com.epam.rd.onlineStore.dto.ProductDAO;
+import com.epam.rd.onlineStore.dao.ProductDAO;
 import com.epam.rd.onlineStore.model.Product;
 import com.epam.rd.onlineStore.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductService implements IProductService {
 
     @Autowired
-    private ProductDAO productDAO = new ProductDAO();
+    private ProductDAO productDAO;
 
 //    public ProductService() {}
 

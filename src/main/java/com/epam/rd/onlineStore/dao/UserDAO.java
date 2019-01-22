@@ -1,4 +1,4 @@
-package com.epam.rd.onlineStore.dto;
+package com.epam.rd.onlineStore.dao;
 
 import com.epam.rd.onlineStore.model.Privilege;
 import com.epam.rd.onlineStore.model.User;

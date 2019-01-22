@@ -1,4 +1,4 @@
-package com.epam.rd.onlineStore.dto;
+package com.epam.rd.onlineStore.dao;
 
 import com.epam.rd.onlineStore.model.Product;
 import org.springframework.stereotype.Repository;

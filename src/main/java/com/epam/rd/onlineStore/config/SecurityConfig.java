@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/", "/header.html", "/footer.html", "/images/*",
-                        "/css/*", "/js/*", "/fragments/*", "/products/search*").permitAll()
+                        "/css/*", "/js/*", "/fragments/*", "/products/search*", "/registration").permitAll()
                 .anyRequest().authenticated();
         http
 //            .formLogin()
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    @Bean
+//    @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider
                 = new DaoAuthenticationProvider();
@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    @Bean
+//    @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder(11);
     }

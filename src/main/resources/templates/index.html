@@ -64,7 +64,7 @@
 
                 <form id="ProductSave" method="put">
 
-                    <input id="editProductId" required type="hidden" name="id" placeholder="Id" >
+                    <input id="editProductId" required type="hidden" name="id" placeholder="Id">
 
                     <label>Наименование:</label>
                     <input id="editProductName" required type="text" name="name" placeholder="Наименование"><br/>
@@ -111,7 +111,8 @@
 
         <ul class="products">
 
-            <li class="product" th:each="product : ${products}" th:if="${category.id==product.category}" th:id="@{'a'+${product.id}}">
+            <li class="product" th:each="product : ${products}" th:if="${category.id==product.category}"
+                th:id="@{'a'+${product.id}}">
 
                 <!--  Кнопки админа -->
                 <input sec:authorize="hasRole('ROLE_ADMIN')" type="image" src="/images/pencil.png"
@@ -123,10 +124,7 @@
                        th:data-product-id="${product.id}">
                 <!--  Кнопки админа (КОНЕЦ) -->
 
-                <!--<div class="visibleSection" th:id="@{'b'+${category.id}+${product.id}}"-->
-                     <!--th:onclick="@{'showHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">-->
-
-                    <div class="visibleSection" th:id="@{'b'+${product.id}}" th:data-product-id = ${product.id}>
+                <div class="visibleSection" th:id="@{'b'+${product.id}}" th:data-product-id=${product.id}>
 
                     <div class="image">
                         <img th:src="@{'images/'+${product.image}}">
@@ -136,9 +134,7 @@
                     </div>
                 </div>
 
-                <!--<div class="hiddenSection" th:id="@{'c'+${category.id}+${product.id}}"-->
-                     <!--th:onclick="@{'hideHiddenTab(\'a'+${category.id}+${product.id}+'\', \'b'+${category.id}+${product.id}+'\', \'c'+${category.id}+${product.id}+'\');'}">-->
-                    <div class="hiddenSection" th:id="@{'c'+${product.id}}" th:data-product-id=${product.id}>
+                <div class="hiddenSection" th:id="@{'c'+${product.id}}" th:data-product-id=${product.id}>
 
                     <div class="image">
                         <img th:src="@{'images/'+${product.image}}">

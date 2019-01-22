@@ -14,10 +14,10 @@ import java.util.List;
 public class ProductRestController {
 
     @Autowired
-    private IProductService productService = new ProductService();
+    private IProductService productService;
 
     @Autowired
-    private CategoryService categoryService = new CategoryService();
+    private CategoryService categoryService;
 
     @PostMapping("/products/new")
     public boolean processCreationForm(@RequestBody Product product) {
@@ -33,6 +33,7 @@ public class ProductRestController {
     public Product editProductSave(@RequestBody Product product) {
         return this.productService.save(product);
     }
+
 
     @DeleteMapping ("/products/{productId}/delete")
     public boolean deleteProduct(@PathVariable("productId") long productId) {

@@ -16,10 +16,10 @@ import java.util.Map;
 public class ProductController {
 
     @Autowired
-    private IProductService productService = new ProductService();
+    private IProductService productService;
 
     @Autowired
-    private CategoryService categoryService = new CategoryService();
+    private CategoryService categoryService;
 
     @GetMapping("/")
     public String index(Map<String, Object> model)
@@ -32,13 +32,6 @@ public class ProductController {
 
         return "index";
     }
-
-//    @RequestMapping("/products/search")
-//    public String searchProductsByName(@RequestParam(value = "productName") String productName, Model model) {
-//        List<Product> productList = this.productService.findByName(productName);
-//        model.addAttribute("productList", productList);
-//        return "fragments/findProductForm :: productFind";
-//    }
 
     @RequestMapping("/header.html")
     public String header() {
